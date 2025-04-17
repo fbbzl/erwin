@@ -15,7 +15,7 @@ import java.util.function.*;
 @Slf4j
 @UtilityClass
 @SuppressWarnings("all")
-public final class Try {
+public class Try {
 
     public static Runnable run(UncheckedRunnable runnable) {
         Objects.requireNonNull(runnable);
