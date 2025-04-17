@@ -1,7 +1,6 @@
 package org.fz.util.lambda;
 
 import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
 import java.util.function.*;
@@ -12,7 +11,6 @@ import java.util.function.*;
  * @author fengbinbin
  * @since 2020-02-13 14:23
  */
-@Slf4j
 @UtilityClass
 @SuppressWarnings("all")
 public class Try {
