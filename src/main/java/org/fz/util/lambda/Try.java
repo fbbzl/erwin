@@ -1,9 +1,7 @@
 package org.fz.util.lambda;
 
-
-import io.netty.util.internal.logging.InternalLogger;
-import io.netty.util.internal.logging.InternalLoggerFactory;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
 import java.util.function.*;
@@ -14,19 +12,18 @@ import java.util.function.*;
  * @author fengbinbin
  * @since 2020-02-13 14:23
  */
+@Slf4j
 @UtilityClass
 @SuppressWarnings("all")
 public final class Try {
-
-    private static final InternalLogger log = InternalLoggerFactory.getInstance(Try.class);
 
     public static Runnable run(UncheckedRunnable runnable) {
         Objects.requireNonNull(runnable);
         return () -> {
             try {
                 runnable.run();
-            } catch (Exception e) {
-                log.debug(e.getMessage());
+            }
+            catch (Exception e) {
                 throw new LambdasException(e);
             }
         };
@@ -37,8 +34,8 @@ public final class Try {
         return t -> {
             try {
                 return function.apply(t);
-            } catch (Exception e) {
-                log.debug(e.getMessage());
+            }
+            catch (Exception e) {
                 throw new LambdasException(e);
             }
         };
@@ -49,8 +46,8 @@ public final class Try {
         return (t, u) -> {
             try {
                 return function.apply(t, u);
-            } catch (Exception e) {
-                log.debug(e.getMessage());
+            }
+            catch (Exception e) {
                 throw new LambdasException(e);
             }
         };
@@ -61,8 +58,8 @@ public final class Try {
         return t -> {
             try {
                 consumer.accept(t);
-            } catch (Exception e) {
-                log.debug(e.getMessage());
+            }
+            catch (Exception e) {
                 throw new LambdasException(e);
             }
         };
@@ -73,8 +70,8 @@ public final class Try {
         return (k, v) -> {
             try {
                 consumer.accept(k, v);
-            } catch (Exception e) {
-                log.debug(e.getMessage());
+            }
+            catch (Exception e) {
                 throw new LambdasException(e);
             }
         };
@@ -85,8 +82,8 @@ public final class Try {
         return () -> {
             try {
                 return supplier.get();
-            } catch (Exception e) {
-                log.debug(e.getMessage());
+            }
+            catch (Exception e) {
                 throw new LambdasException(e);
             }
         };
@@ -97,37 +94,12 @@ public final class Try {
         return t -> {
             try {
                 return predicate.test(t);
-            } catch (Exception e) {
-                log.debug(e.getMessage());
+            }
+            catch (Exception e) {
                 throw new LambdasException(e);
             }
         };
     }
-
-    /**
-     * Use this method with caution!! Capture, but it can be used in scenarios where only information is printed, and it
-     * is not recommended for other scenarios
-     */
-    public static Runnable suppress(UncheckedRunnable run) {
-        return () -> {
-            try {
-                run.run();
-            } catch (Exception exception) {
-                log.error(exception.getMessage());
-            }
-        };
-    }
-
-    public static <T> Consumer<T> suppress(UncheckedConsumer<T> consumer) {
-        return t -> {
-            try {
-                consumer.accept(t);
-            } catch (Exception exception) {
-                log.error(exception.getMessage());
-            }
-        };
-    }
-
 
     @FunctionalInterface
     public interface UncheckedConsumer<T> {
