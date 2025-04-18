@@ -13,15 +13,14 @@ import java.util.function.*;
  */
 @UtilityClass
 @SuppressWarnings("all")
-public class Try {
+public final class Try {
 
     public static Runnable run(UncheckedRunnable runnable) {
         Objects.requireNonNull(runnable);
         return () -> {
             try {
                 runnable.run();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 throw new LambdasException(e);
             }
         };
@@ -32,8 +31,7 @@ public class Try {
         return t -> {
             try {
                 return function.apply(t);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 throw new LambdasException(e);
             }
         };
@@ -44,8 +42,7 @@ public class Try {
         return (t, u) -> {
             try {
                 return function.apply(t, u);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 throw new LambdasException(e);
             }
         };
@@ -56,8 +53,7 @@ public class Try {
         return t -> {
             try {
                 consumer.accept(t);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 throw new LambdasException(e);
             }
         };
@@ -68,8 +64,7 @@ public class Try {
         return (k, v) -> {
             try {
                 consumer.accept(k, v);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 throw new LambdasException(e);
             }
         };
@@ -80,8 +75,7 @@ public class Try {
         return () -> {
             try {
                 return supplier.get();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 throw new LambdasException(e);
             }
         };
@@ -92,12 +86,34 @@ public class Try {
         return t -> {
             try {
                 return predicate.test(t);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 throw new LambdasException(e);
             }
         };
     }
+
+    /**
+     * Use this method with caution!! Capture, but it can be used in scenarios where only information is printed, and it
+     * is not recommended for other scenarios
+     */
+    public static Runnable suppress(UncheckedRunnable run) {
+        return () -> {
+            try {
+                run.run();
+            } catch (Exception exception) {
+            }
+        };
+    }
+
+    public static <T> Consumer<T> suppress(UncheckedConsumer<T> consumer) {
+        return t -> {
+            try {
+                consumer.accept(t);
+            } catch (Exception exception) {
+            }
+        };
+    }
+
 
     @FunctionalInterface
     public interface UncheckedConsumer<T> {
