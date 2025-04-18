@@ -1,6 +1,5 @@
 package org.fz.util.lang;
 
-import com.sun.istack.internal.Nullable;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,27 +32,28 @@ public class NullSafe {
         return nullThen(supplier, null);
     }
 
-    public static <T> T nullThen(Supplier<T> supplier, @Nullable Consumer<NullPointerException> handleNull) {
-        try { return supplier.get(); } catch (NullPointerException nullPoint) {
-            if (handleNull != null) { handleNull.accept(nullPoint); }
+    public static <T> T nullThen(Supplier<T> supplier, Consumer<NullPointerException> handleNull) {
+        try {return supplier.get();}
+        catch (NullPointerException nullPoint) {
+            if (handleNull != null) {handleNull.accept(nullPoint);}
             return null;
         }
     }
 
     public static <T> T nullDefault(Supplier<T> supplier, T defaultValue) {
-        try { return supplier.get(); } catch (NullPointerException nullPoint) { return defaultValue; }
+        try {return supplier.get();} catch (NullPointerException nullPoint) {return defaultValue;}
     }
 
     public static <T> T nullDefault(Supplier<T> supplier, Supplier<T> defaultValue) {
-        try { return supplier.get(); } catch (NullPointerException nullPoint) { return defaultValue.get(); }
+        try {return supplier.get();} catch (NullPointerException nullPoint) {return defaultValue.get();}
     }
 
     public static <T> T nullThrow(Supplier<T> supplier, RuntimeException exception) {
-        try { return supplier.get(); } catch (NullPointerException e) { throw exception; }
+        try {return supplier.get();} catch (NullPointerException e) {throw exception;}
     }
 
     public static <T> T nullThrow(Supplier<T> supplier, Supplier<RuntimeException> exception) {
-        try { return supplier.get(); } catch (NullPointerException e) { throw exception.get(); }
+        try {return supplier.get();} catch (NullPointerException e) {throw exception.get();}
     }
 
     //***************************************       nullable runnable start      *************************************//
@@ -62,18 +62,19 @@ public class NullSafe {
         nullThen(runnable, null);
     }
 
-    public static void nullThen(Runnable runnable, @Nullable Consumer<NullPointerException> handleNull) {
-        try { runnable.run(); } catch (NullPointerException nullPoint) {
-            if (handleNull != null) { handleNull.accept(nullPoint); }
+    public static void nullThen(Runnable runnable, Consumer<NullPointerException> handleNull) {
+        try {runnable.run();}
+        catch (NullPointerException nullPoint) {
+            if (handleNull != null) {handleNull.accept(nullPoint);}
         }
     }
 
     public static void nullThrow(Runnable runnable, RuntimeException exception) {
-        try { runnable.run(); } catch (NullPointerException nullPoint) { throw exception; }
+        try {runnable.run();} catch (NullPointerException nullPoint) {throw exception;}
     }
 
     public static void nullThrow(Runnable runnable, Supplier<RuntimeException> exception) {
-        try { runnable.run(); } catch (NullPointerException nullPoint) { throw exception.get(); }
+        try {runnable.run();} catch (NullPointerException nullPoint) {throw exception.get();}
     }
 
     //***************************************       nullable consumer start      *************************************//
@@ -83,18 +84,19 @@ public class NullSafe {
     }
 
     public static <T> void nullThen(T arg, Consumer<T> consumer,
-                                    @Nullable Consumer<NullPointerException> handleNull) {
-        try { consumer.accept(arg); } catch (NullPointerException nullPoint) {
-            if (handleNull != null) { handleNull.accept(nullPoint); }
+                                    Consumer<NullPointerException> handleNull) {
+        try {consumer.accept(arg);}
+        catch (NullPointerException nullPoint) {
+            if (handleNull != null) {handleNull.accept(nullPoint);}
         }
     }
 
     public static <T> void nullThrow(T arg, Consumer<T> consumer, RuntimeException exception) {
-        try { consumer.accept(arg); } catch (NullPointerException nullPoint) { throw exception; }
+        try {consumer.accept(arg);} catch (NullPointerException nullPoint) {throw exception;}
     }
 
     public static <T> void nullThrow(T arg, Consumer<T> consumer, Supplier<RuntimeException> exception) {
-        try { consumer.accept(arg); } catch (NullPointerException nullPoint) { throw exception.get(); }
+        try {consumer.accept(arg);} catch (NullPointerException nullPoint) {throw exception.get();}
     }
 
     //***************************************       nullable function start      *************************************//
@@ -104,27 +106,28 @@ public class NullSafe {
     }
 
     public static <T, R> R nullThen(T arg, Function<T, R> fn,
-                                    @Nullable Consumer<NullPointerException> handleNull) {
-        try { return fn.apply(arg); } catch (NullPointerException nullPoint) {
-            if (handleNull != null) { handleNull.accept(nullPoint); }
+                                    Consumer<NullPointerException> handleNull) {
+        try {return fn.apply(arg);}
+        catch (NullPointerException nullPoint) {
+            if (handleNull != null) {handleNull.accept(nullPoint);}
             return null;
         }
     }
 
     public static <T, R> R nullDefault(T arg, Function<T, R> fn, R defaultValue) {
-        try { return fn.apply(arg); } catch (NullPointerException nullPoint) { return defaultValue; }
+        try {return fn.apply(arg);} catch (NullPointerException nullPoint) {return defaultValue;}
     }
 
     public static <T, R> R nullDefault(T arg, Function<T, R> fn, Supplier<R> defaultValue) {
-        try { return fn.apply(arg); } catch (NullPointerException nullPoint) { return defaultValue.get(); }
+        try {return fn.apply(arg);} catch (NullPointerException nullPoint) {return defaultValue.get();}
     }
 
     public static <T, R> R nullThrow(T arg, Function<T, R> fn, RuntimeException exception) {
-        try { return fn.apply(arg); } catch (NullPointerException nullPoint) { throw exception; }
+        try {return fn.apply(arg);} catch (NullPointerException nullPoint) {throw exception;}
     }
 
     public static <T, R> R nullThrow(T arg, Function<T, R> fn, Supplier<RuntimeException> exception) {
-        try { return fn.apply(arg); } catch (NullPointerException nullPoint) { throw exception.get(); }
+        try {return fn.apply(arg);} catch (NullPointerException nullPoint) {throw exception.get();}
     }
 
 
@@ -138,7 +141,7 @@ public class NullSafe {
         }
 
         public static <T> Supplier<T> nullThen(Supplier<T> supplier,
-                                               @Nullable Consumer<NullPointerException> handleNull) {
+                                               Consumer<NullPointerException> handleNull) {
             return () -> NullSafe.nullThen(supplier, handleNull);
         }
 
@@ -162,7 +165,7 @@ public class NullSafe {
             return nullThen(runnable, null);
         }
 
-        public static Runnable nullThen(Runnable runnable, @Nullable Consumer<NullPointerException> handleNull) {
+        public static Runnable nullThen(Runnable runnable, Consumer<NullPointerException> handleNull) {
             return () -> NullSafe.nullThen(runnable, handleNull);
         }
 
@@ -179,7 +182,7 @@ public class NullSafe {
         }
 
         public static <T> Consumer<T> nullThen(Consumer<T> consumer,
-                                               @Nullable Consumer<NullPointerException> handleNull) {
+                                               Consumer<NullPointerException> handleNull) {
             return t -> NullSafe.nullThen(t, consumer, handleNull);
         }
 
@@ -196,7 +199,7 @@ public class NullSafe {
         }
 
         public static <T, R> Function<T, R> nullThen(Function<T, R> fn,
-                                                     @Nullable Consumer<NullPointerException> handleNull) {
+                                                     Consumer<NullPointerException> handleNull) {
             return t -> NullSafe.nullThen(t, fn, handleNull);
         }
 
