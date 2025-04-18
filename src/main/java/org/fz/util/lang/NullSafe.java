@@ -1,7 +1,6 @@
 package org.fz.util.lang;
 
 import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -22,7 +21,6 @@ import java.util.function.Supplier;
  * @since 2024/5/30 11:04
  */
 
-@Slf4j
 @UtilityClass
 public class NullSafe {
 
