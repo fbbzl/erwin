@@ -8,9 +8,9 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Exception tool class All static methods are composed of an expression and an exceptionMessage. When the expression
+ * Exception tool class All static methods are composed of an expression and an exceptionNotice. When the expression
  * is established, an exception will be
- * thrown with the specified exceptionMessage
+ * thrown with the specified exceptionNotice
  *
  * @author fengbinbin
  * @since 2017/4/2/038 11:52
@@ -18,279 +18,282 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Throws {
 
-    static final String MAP_NULL        = "map is null";
-    static final String KEY_NULL        = "key is null";
-    static final String VALUE_NULL      = "value is null";
-    static final String COLLECTION_NULL = "collection is null";
-    static final String ELEMENT_NULL    = "element is null";
-    static final String ARRAY_NULL      = "array is null";
+    static final NoticeSupplier
+            MAP_NULL        = () -> "map is null",
+            KEY_NULL        = () -> "key is null",
+            VALUE_NULL      = () -> "value is null",
+            COLLECTION_NULL = () -> "collection is null",
+            ELEMENT_NULL    = () -> "element is null",
+            ARRAY_NULL      = () -> "array is null",
+            TYPE_NULL       = () -> "type can not be null",
+            INSTANCED_NULL  = () -> "instanced object can not be null";
 
-    public static void ifTrue(Object expression, RuntimeException runtimeException) {
-        if (Objects.equals(expression, Boolean.TRUE)) throw runtimeException;
+    public static void ifTrue(Object expression, ExceptionSupplier exception) {
+        if (Objects.equals(expression, Boolean.TRUE)) throw exception.get();
     }
 
-    public static void ifTrue(Object expression, String exceptionMessage) {
-        ifTrue(expression, new RuntimeException(exceptionMessage));
+    public static void ifTrue(Object expression, NoticeSupplier notice) {
+        ifTrue(expression, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifFalse(Object expression, RuntimeException runtimeException) {
-        if (Objects.equals(expression, Boolean.FALSE)) throw runtimeException;
+    public static void ifFalse(Object expression, ExceptionSupplier exception) {
+        if (Objects.equals(expression, Boolean.FALSE)) throw exception.get();
     }
 
-    public static void ifFalse(Object expression, String exceptionMessage) {
-        ifFalse(expression, new RuntimeException(exceptionMessage));
+    public static void ifFalse(Object expression, NoticeSupplier notice) {
+        ifFalse(expression, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifNull(Object object, RuntimeException runtimeException) {
-        if (object == null) throw runtimeException;
+    public static void ifNull(Object object, ExceptionSupplier exception) {
+        if (object == null) throw exception.get();
     }
 
-    public static void ifNull(Object object, String exceptionMessage) {
-        ifNull(object, new RuntimeException(exceptionMessage));
+    public static void ifNull(Object object, NoticeSupplier notice) {
+        ifNull(object, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifNotNull(Object object, RuntimeException runtimeException) {
-        if (object != null) throw runtimeException;
+    public static void ifNotNull(Object object, ExceptionSupplier exception) {
+        if (object != null) throw exception.get();
     }
 
-    public static void ifNotNull(Object object, String exceptionMessage) {
-        ifNotNull(object, new RuntimeException(exceptionMessage));
+    public static void ifNotNull(Object object, NoticeSupplier notice) {
+        ifNotNull(object, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifEmpty(Object[] array, RuntimeException runtimeException) {
-        if (array == null || array.length == 0) throw runtimeException;
+    public static void ifEmpty(Object[] array, ExceptionSupplier exception) {
+        if (array == null || array.length == 0) throw exception.get();
     }
 
-    public static void ifEmpty(Object[] array, String exceptionMessage) {
-        ifEmpty(array, new RuntimeException(exceptionMessage));
+    public static void ifEmpty(Object[] array, NoticeSupplier notice) {
+        ifEmpty(array, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifNotEmpty(Object[] array, RuntimeException runtimeException) {
-        if (array != null && array.length > 0) throw runtimeException;
+    public static void ifNotEmpty(Object[] array, ExceptionSupplier exception) {
+        if (array != null && array.length > 0) throw exception.get();
     }
 
-    public static void ifNotEmpty(Object[] array, String exceptionMessage) {
-        ifNotEmpty(array, new RuntimeException(exceptionMessage));
+    public static void ifNotEmpty(Object[] array, NoticeSupplier notice) {
+        ifNotEmpty(array, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifEmpty(Collection<?> collection, RuntimeException runtimeException) {
-        if (collection == null || collection.isEmpty()) throw runtimeException;
+    public static void ifEmpty(Collection<?> collection, ExceptionSupplier exception) {
+        if (collection == null || collection.isEmpty()) throw exception.get();
     }
 
-    public static void ifEmpty(Collection<?> collection, String exceptionMessage) {
-        ifEmpty(collection, new RuntimeException(exceptionMessage));
+    public static void ifEmpty(Collection<?> collection, NoticeSupplier notice) {
+        ifEmpty(collection, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifEmpty(Map<?, ?> map, RuntimeException runtimeException) {
-        if (map == null || map.isEmpty()) throw runtimeException;
+    public static void ifEmpty(Map<?, ?> map, ExceptionSupplier exception) {
+        if (map == null || map.isEmpty()) throw exception.get();
     }
 
-    public static void ifEmpty(Map<?, ?> map, String exceptionMessage) {
-        ifEmpty(map, new RuntimeException(exceptionMessage));
+    public static void ifEmpty(Map<?, ?> map, NoticeSupplier notice) {
+        ifEmpty(map, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifNotEmpty(Collection<?> collection, RuntimeException runtimeException) {
-        if (collection != null && !collection.isEmpty()) throw runtimeException;
+    public static void ifNotEmpty(Collection<?> collection, ExceptionSupplier exception) {
+        if (collection != null && !collection.isEmpty()) throw exception.get();
     }
 
-    public static void ifNotEmpty(Collection<?> collection, String exceptionMessage) {
-        ifNotEmpty(collection, new RuntimeException(exceptionMessage));
+    public static void ifNotEmpty(Collection<?> collection, NoticeSupplier notice) {
+        ifNotEmpty(collection, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifNotEmpty(Map<?, ?> map, RuntimeException runtimeException) {
-        if (map != null && !map.isEmpty()) throw runtimeException;
+    public static void ifNotEmpty(Map<?, ?> map, ExceptionSupplier exception) {
+        if (map != null && !map.isEmpty()) throw exception.get();
     }
 
-    public static void ifNotEmpty(Map<?, ?> map, String exceptionMessage) {
-        ifNotEmpty(map, new RuntimeException(exceptionMessage));
+    public static void ifNotEmpty(Map<?, ?> map, NoticeSupplier notice) {
+        ifNotEmpty(map, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifEmpty(String text, RuntimeException runtimeException) {
-        if (text == null || text.isEmpty()) throw runtimeException;
+    public static void ifEmpty(String text, ExceptionSupplier exception) {
+        if (text == null || text.isEmpty()) throw exception.get();
     }
 
-    public static void ifEmpty(String text, String exceptionMessage) {
-        ifEmpty(text, new RuntimeException(exceptionMessage));
+    public static void ifEmpty(String text, NoticeSupplier notice) {
+        ifEmpty(text, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifNotEmpty(String text, RuntimeException runtimeException) {
-        if (text != null && !text.isEmpty()) throw runtimeException;
+    public static void ifNotEmpty(String text, ExceptionSupplier exception) {
+        if (text != null && !text.isEmpty()) throw exception.get();
     }
 
-    public static void ifNotEmpty(String text, String exceptionMessage) {
-        ifNotEmpty(text, new RuntimeException(exceptionMessage));
+    public static void ifNotEmpty(String text, NoticeSupplier notice) {
+        ifNotEmpty(text, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifBlank(String text, RuntimeException runtimeException) {
-        if (text == null || text.trim().isEmpty()) throw runtimeException;
+    public static void ifBlank(String text, ExceptionSupplier exception) {
+        if (text == null || text.trim().isEmpty()) throw exception.get();
     }
 
-    public static void ifBlank(String text, String exceptionMessage) {
-        ifBlank(text, new RuntimeException(exceptionMessage));
+    public static void ifBlank(String text, NoticeSupplier notice) {
+        ifBlank(text, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifNotBlank(String text, RuntimeException runtimeException) {
-        if (text != null && !text.trim().isEmpty()) throw runtimeException;
+    public static void ifNotBlank(String text, ExceptionSupplier exception) {
+        if (text != null && !text.trim().isEmpty()) throw exception.get();
     }
 
-    public static void ifNotBlank(String text, String exceptionMessage) {
-        ifNotBlank(text, new RuntimeException(exceptionMessage));
+    public static void ifNotBlank(String text, NoticeSupplier notice) {
+        ifNotBlank(text, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifEquals(Object l, Object r, RuntimeException runtimeException) {
-        if (Objects.equals(l, r)) throw runtimeException;
+    public static void ifEquals(Object l, Object r, ExceptionSupplier exception) {
+        if (Objects.equals(l, r)) throw exception.get();
     }
 
-    public static void ifEquals(Object l, Object r, String exceptionMessage) {
-        ifEquals(l, r, new RuntimeException(exceptionMessage));
+    public static void ifEquals(Object l, Object r, NoticeSupplier notice) {
+        ifEquals(l, r, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifNotEquals(Object l, Object r, RuntimeException runtimeException) {
-        if (!Objects.equals(l, r)) throw runtimeException;
+    public static void ifNotEquals(Object l, Object r, ExceptionSupplier exception) {
+        if (!Objects.equals(l, r)) throw exception.get();
     }
 
-    public static void ifNotEquals(Object l, Object r, String exceptionMessage) {
-        ifNotEquals(l, r, new RuntimeException(exceptionMessage));
+    public static void ifNotEquals(Object l, Object r, NoticeSupplier notice) {
+        ifNotEquals(l, r, () -> new RuntimeException(notice.get()));
     }
 
-    public static <T> void ifContains(Collection<T> collection, T element, RuntimeException runtimeException) {
+    public static <T> void ifContains(Collection<T> collection, T element, ExceptionSupplier exception) {
         ifNull(collection, COLLECTION_NULL);
         ifNull(element, ELEMENT_NULL);
 
-        if (collection.contains(element)) throw runtimeException;
+        if (collection.contains(element)) throw exception.get();
     }
 
-    public static <T> void ifContains(Collection<T> collection, T element, String exceptionMessage) {
-        ifContains(collection, element, new RuntimeException(exceptionMessage));
+    public static <T> void ifContains(Collection<T> collection, T element, NoticeSupplier notice) {
+        ifContains(collection, element, () -> new RuntimeException(notice.get()));
     }
 
-    public static <T> void ifNotContains(Collection<T> collection, T element, RuntimeException runtimeException) {
+    public static <T> void ifNotContains(Collection<T> collection, T element, ExceptionSupplier exception) {
         ifNull(collection, COLLECTION_NULL);
         ifNull(element, ELEMENT_NULL);
 
-        if (!collection.contains(element)) throw runtimeException;
+        if (!collection.contains(element)) throw exception.get();
     }
 
-    public static <T> void ifNotContains(Collection<T> collection, T element, String exceptionMessage) {
-        ifNotContains(collection, element, new RuntimeException(exceptionMessage));
+    public static <T> void ifNotContains(Collection<T> collection, T element, NoticeSupplier notice) {
+        ifNotContains(collection, element, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifContains(CharSequence origin, CharSequence target, String exceptionMessage) {
-        ifContains(origin, target, new RuntimeException(exceptionMessage));
+    public static void ifContains(CharSequence origin, CharSequence target, NoticeSupplier notice) {
+        ifContains(origin, target, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifContains(CharSequence origin, CharSequence target, RuntimeException exception) {
-        if (origin == null || target == null || origin.toString().contains(target)) throw exception;
+    public static void ifContains(CharSequence origin, CharSequence target, ExceptionSupplier exception) {
+        if (origin == null || target == null || origin.toString().contains(target)) throw exception.get();
     }
 
-    public static void ifNotContains(CharSequence origin, CharSequence target, String exceptionMessage) {
-        ifNotContains(origin, target, new RuntimeException(exceptionMessage));
+    public static void ifNotContains(CharSequence origin, CharSequence target, NoticeSupplier notice) {
+        ifNotContains(origin, target, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifNotContains(CharSequence origin, CharSequence target, RuntimeException exception) {
-        if (origin == null || target == null || !origin.toString().contains(target)) throw exception;
+    public static void ifNotContains(CharSequence origin, CharSequence target, ExceptionSupplier exception) {
+        if (origin == null || target == null || !origin.toString().contains(target)) throw exception.get();
     }
 
-    public static <K, V> void ifContainsKey(Map<K, V> map, K key, RuntimeException runtimeException) {
+    public static <K, V> void ifContainsKey(Map<K, V> map, K key, ExceptionSupplier exception) {
         ifNull(map, MAP_NULL);
         ifNull(key, KEY_NULL);
 
-        if (map.containsKey(key)) throw runtimeException;
+        if (map.containsKey(key)) throw exception.get();
     }
 
-    public static <K, V> void ifContainsKey(Map<K, V> map, K key, String exceptionMessage) {
-        ifContainsKey(map, key, new RuntimeException(exceptionMessage));
+    public static <K, V> void ifContainsKey(Map<K, V> map, K key, NoticeSupplier notice) {
+        ifContainsKey(map, key, () -> new RuntimeException(notice.get()));
     }
 
-    public static <K, V> void ifNotContainsKey(Map<K, V> map, K key, RuntimeException runtimeException) {
+    public static <K, V> void ifNotContainsKey(Map<K, V> map, K key, ExceptionSupplier exception) {
         ifNull(map, MAP_NULL);
         ifNull(key, KEY_NULL);
 
-        if (!map.containsKey(key)) throw runtimeException;
+        if (!map.containsKey(key)) throw exception.get();
     }
 
-    public static <K, V> void ifNotContainsKey(Map<K, V> map, K key, String exceptionMessage) {
-        ifNotContainsKey(map, key, new RuntimeException(exceptionMessage));
+    public static <K, V> void ifNotContainsKey(Map<K, V> map, K key, NoticeSupplier notice) {
+        ifNotContainsKey(map, key, () -> new RuntimeException(notice.get()));
     }
 
-    public static <K, V> void ifContainsValue(Map<K, V> map, V value, RuntimeException runtimeException) {
+    public static <K, V> void ifContainsValue(Map<K, V> map, V value, ExceptionSupplier exception) {
         ifNull(map, MAP_NULL);
         ifNull(value, VALUE_NULL);
 
-        if (map.containsValue(value)) throw runtimeException;
+        if (map.containsValue(value)) throw exception.get();
     }
 
-    public static <K, V> void ifContainsValue(Map<K, V> map, V value, String exceptionMessage) {
-        ifContainsValue(map, value, new RuntimeException(exceptionMessage));
+    public static <K, V> void ifContainsValue(Map<K, V> map, V value, NoticeSupplier notice) {
+        ifContainsValue(map, value, () -> new RuntimeException(notice.get()));
     }
 
-    public static <K, V> void ifNotContainsValue(Map<K, V> map, V value, RuntimeException runtimeException) {
+    public static <K, V> void ifNotContainsValue(Map<K, V> map, V value, ExceptionSupplier exception) {
         ifNull(map, MAP_NULL);
         ifNull(value, VALUE_NULL);
 
-        if (!map.containsValue(value)) throw runtimeException;
+        if (!map.containsValue(value)) throw exception.get();
     }
 
-    public static <K, V> void ifNotContainsValue(Map<K, V> map, V value, String exceptionMessage) {
-        ifNotContainsValue(map, value, new RuntimeException(exceptionMessage));
+    public static <K, V> void ifNotContainsValue(Map<K, V> map, V value, NoticeSupplier notice) {
+        ifNotContainsValue(map, value, () -> new RuntimeException(notice.get()));
     }
 
-    public static <T> void ifInstanceOf(Class<?> type, T object, RuntimeException runtimeException) {
-        Throws.ifNull(type, "type can not be null");
-        Throws.ifNull(object, "instanced object can not be null");
+    public static <T> void ifInstanceOf(Class<?> type, T object, ExceptionSupplier exception) {
+        Throws.ifNull(type, TYPE_NULL);
+        Throws.ifNull(object, INSTANCED_NULL);
 
-        if (type.isInstance(object)) throw runtimeException;
+        if (type.isInstance(object)) throw exception.get();
     }
 
-    public static <T> void ifInstanceOf(Class<?> type, T object, String exceptionMessage) {
-        ifInstanceOf(type, object, new RuntimeException(exceptionMessage));
+    public static <T> void ifInstanceOf(Class<?> type, T object, NoticeSupplier notice) {
+        ifInstanceOf(type, object, () -> new RuntimeException(notice.get()));
     }
 
-    public static <T> void ifNotInstanceOf(Class<?> type, T object, RuntimeException runtimeException) {
-        Throws.ifNull(type, "type can not be null");
-        Throws.ifNull(object, "instanced object can not be null");
+    public static <T> void ifNotInstanceOf(Class<?> type, T object, ExceptionSupplier exception) {
+        Throws.ifNull(type, TYPE_NULL);
+        Throws.ifNull(object, INSTANCED_NULL);
 
-        if (!type.isInstance(object)) throw runtimeException;
+        if (!type.isInstance(object)) throw exception.get();
     }
 
-    public static <T> void ifNotInstanceOf(Class<?> type, T object, String exceptionMessage) {
-        ifNotInstanceOf(type, object, new RuntimeException(exceptionMessage));
+    public static <T> void ifNotInstanceOf(Class<?> type, T object, NoticeSupplier notice) {
+        ifNotInstanceOf(type, object, () -> new RuntimeException(notice.get()));
     }
 
-    public static <T> void ifHasNullElement(Collection<T> collection, RuntimeException runtimeException) {
+    public static <T> void ifHasNullElement(Collection<T> collection, ExceptionSupplier exception) {
         Throws.ifNull(collection, COLLECTION_NULL);
 
-        for (T t : collection) Throws.ifNull(t, runtimeException);
+        for (T t : collection) Throws.ifNull(t, exception);
     }
 
-    public static <T> void ifHasNullElement(Collection<T> collection, String exceptionMessage) {
-        ifHasNullElement(collection, new RuntimeException(exceptionMessage));
+    public static <T> void ifHasNullElement(Collection<T> collection, NoticeSupplier notice) {
+        ifHasNullElement(collection, () -> new RuntimeException(notice.get()));
     }
 
-    public static <T> void ifHasNullElement(T[] array, RuntimeException runtimeException) {
+    public static <T> void ifHasNullElement(T[] array, ExceptionSupplier exception) {
         Throws.ifNull(array, ARRAY_NULL);
 
-        for (T t : array) Throws.ifNull(t, runtimeException);
+        for (T t : array) Throws.ifNull(t, exception);
     }
 
-    public static <T> void ifHasNullElement(T[] array, String exceptionMessage) {
-        ifHasNullElement(array, new RuntimeException(exceptionMessage));
+    public static <T> void ifHasNullElement(T[] array, NoticeSupplier notice) {
+        ifHasNullElement(array, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifAssignable(Class<?> superType, Class<?> subType, String exceptionMessage) {
-        ifAssignable(superType, subType, new RuntimeException(exceptionMessage));
+    public static void ifAssignable(Class<?> superType, Class<?> subType, NoticeSupplier notice) {
+        ifAssignable(superType, subType, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifAssignable(Class<?> superType, Class<?> subType, RuntimeException exception) {
-        if (superType == null || subType == null || superType.isAssignableFrom(subType)) throw exception;
+    public static void ifAssignable(Class<?> superType, Class<?> subType, ExceptionSupplier exception) {
+        if (superType == null || subType == null || superType.isAssignableFrom(subType)) throw exception.get();
     }
 
-    public static void ifNotAssignable(Class<?> superType, Class<?> subType, String exceptionMessage) {
-        ifNotAssignable(superType, subType, new RuntimeException(exceptionMessage));
+    public static void ifNotAssignable(Class<?> superType, Class<?> subType, NoticeSupplier notice) {
+        ifNotAssignable(superType, subType, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifNotAssignable(Class<?> superType, Class<?> subType, RuntimeException exception) {
-        if (superType == null || subType == null || !superType.isAssignableFrom(subType)) throw exception;
+    public static void ifNotAssignable(Class<?> superType, Class<?> subType, ExceptionSupplier exception) {
+        if (superType == null || subType == null || !superType.isAssignableFrom(subType)) throw exception.get();
     }
 
 }
