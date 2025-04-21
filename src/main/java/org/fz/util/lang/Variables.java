@@ -1,9 +1,9 @@
 package org.fz.util.lang;
 
 import lombok.experimental.UtilityClass;
-import org.fz.util.exception.ExceptionSupplier;
-import org.fz.util.exception.NoticeSupplier;
 import org.fz.util.exception.Throws;
+import org.fz.util.exception.Throws.ExceptionSupplier;
+import org.fz.util.exception.Throws.NoticeSupplier;
 
 import java.util.Collection;
 import java.util.Map;

@@ -296,4 +296,27 @@ public final class Throws {
         if (superType == null || subType == null || !superType.isAssignableFrom(subType)) throw exception.get();
     }
 
+    /**
+     * @author fengbinbin
+     * @since 2017/4/2/038 11:52
+     */
+    @FunctionalInterface
+    public static interface ExceptionSupplier {
+        /**
+         * get one exception
+         */
+        RuntimeException get();
+    }
+
+    /**
+     * @author fengbinbin
+     * @since 2017/4/2/038 11:52
+     */
+    @FunctionalInterface
+    public static interface NoticeSupplier {
+        /**
+         * get one exception notice
+         */
+        String get();
+    }
 }
