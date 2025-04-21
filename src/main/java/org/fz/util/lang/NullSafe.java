@@ -130,7 +130,7 @@ public class NullSafe {
 
 
     /**
-     * 包装lambda, 对空指针异常进行处理
+     *wrap the lambda and handle null pointer exceptions
      */
     public final static class NullSafeLambda {
 

@@ -1,11 +1,6 @@
 package org.fz.util.stream;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Spliterator;
+import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
@@ -78,16 +73,13 @@ public class StreamForks<T> {
     }
 
     /**
-     * fork操作后返回的结果
+     * the result returned after the fork operation
      */
     public interface ForkResult {
 
         /**
-         * 获取fork操作后的结果
+         * obtain the result of the fork operation
          *
-         * @param key fork key
-         * @param <R> 结果
-         * @return 返回fork处理后的结果
          */
         <R> R get(Object key);
     }
