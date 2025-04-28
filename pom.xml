@@ -49,7 +49,7 @@
         <nexus-staging-maven-plugin-version>1.6.7</nexus-staging-maven-plugin-version>
 
         <lombok.version>1.18.34</lombok.version>
-        <hutool-core.version>5.8.28</hutool-core.version>
+        <hutool-core.version>5.8.29</hutool-core.version>
     </properties>
 
     <dependencies>
