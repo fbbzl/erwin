@@ -59,7 +59,7 @@ public class LambdaMetas {
             return (Function<P, T>) site.getTarget().invokeExact();
         }
         catch (Throwable throwable) {
-            throw new LambdasException("can not generate lambda constructor for class [" + clazz + "], param type: [" + paramType + "]");
+            throw new LambdasException("can not generate lambda constructor for class [" + clazz + "], param type: [" + paramType + "]", throwable);
         }
     }
 
@@ -79,7 +79,7 @@ public class LambdaMetas {
             return (Function<T, R>) site.getTarget().invokeExact();
         }
         catch (Throwable throwable) {
-            throw new IllegalArgumentException("can not generate lambda getter, class [" + clazz + "], method: [" + methodName + "], return type: [" + returnType + "]");
+            throw new IllegalArgumentException("can not generate lambda getter, class [" + clazz + "], method: [" + methodName + "], return type: [" + returnType + "]", throwable);
         }
     }
 
@@ -99,7 +99,7 @@ public class LambdaMetas {
             return (BiConsumer<A, P>) site.getTarget().invokeExact();
         }
         catch (Throwable throwable) {
-            throw new IllegalArgumentException("can not generate lambda setter, class [" + clazz + "], method: [" + methodName + "], param type: [" + paramType + "]");
+            throw new IllegalArgumentException("can not generate lambda setter, class [" + clazz + "], method: [" + methodName + "], param type: [" + paramType + "]", throwable);
         }
     }
 
