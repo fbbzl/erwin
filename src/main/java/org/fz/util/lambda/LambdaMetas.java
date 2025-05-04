@@ -38,7 +38,7 @@ public class LambdaMetas {
             return (Supplier<T>) site.getTarget().invokeExact();
         }
         catch (Throwable throwable) {
-            throw new LambdasException("can not generate lambda constructor for class [" + clazz + "]");
+            throw new LambdasException("can not generate lambda constructor for class [" + clazz + "]", throwable);
         }
     }
 
