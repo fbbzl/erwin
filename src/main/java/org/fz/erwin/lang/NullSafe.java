@@ -1,4 +1,4 @@
-package org.fz.util.lang;
+package org.fz.erwin.lang;
 
 import lombok.experimental.UtilityClass;
 

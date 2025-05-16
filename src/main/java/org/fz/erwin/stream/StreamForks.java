@@ -1,4 +1,4 @@
-package org.fz.util.stream;
+package org.fz.erwin.stream;
 
 import java.util.*;
 import java.util.concurrent.BlockingQueue;

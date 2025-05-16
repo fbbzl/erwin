@@ -1,9 +1,9 @@
-package org.fz.util.lang;
+package org.fz.erwin.lang;
 
 import lombok.experimental.UtilityClass;
-import org.fz.util.exception.Throws;
-import org.fz.util.exception.Throws.ExceptionSupplier;
-import org.fz.util.exception.Throws.NoticeSupplier;
+import org.fz.erwin.exception.Throws;
+import org.fz.erwin.exception.Throws.ExceptionSupplier;
+import org.fz.erwin.exception.Throws.NoticeSupplier;
 
 import java.util.Collection;
 import java.util.Map;

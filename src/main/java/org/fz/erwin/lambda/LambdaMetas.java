@@ -1,7 +1,7 @@
-package org.fz.util.lambda;
+package org.fz.erwin.lambda;
 
 import lombok.experimental.UtilityClass;
-import org.fz.util.lambda.Try.LambdasException;
+import org.fz.erwin.lambda.Try.LambdasException;
 
 import java.lang.invoke.*;
 import java.lang.invoke.MethodHandles.Lookup;

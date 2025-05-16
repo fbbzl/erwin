@@ -1,4 +1,4 @@
-package org.fz.util.exception;
+package org.fz.erwin.exception;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

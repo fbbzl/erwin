@@ -1,4 +1,4 @@
-package org.fz.util.lambda;
+package org.fz.erwin.lambda;
 
 import lombok.experimental.UtilityClass;
 
