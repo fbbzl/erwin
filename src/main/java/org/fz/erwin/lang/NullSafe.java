@@ -49,7 +49,7 @@ public class NullSafe {
         try { return supplier.get(); } catch (NullPointerException e) { throw exception; }
     }
 
-    public static <T> T nullThrow(Supplier<T> supplier, Supplier<RuntimeException> exception) {
+    public static <T> T nullThrow(Supplier<T> supplier, Supplier<? extends RuntimeException> exception) {
         try { return supplier.get(); } catch (NullPointerException e) { throw exception.get(); }
     }
 
@@ -70,7 +70,7 @@ public class NullSafe {
         try { runnable.run(); } catch (NullPointerException nullPoint) { throw exception; }
     }
 
-    public static void nullThrow(Runnable runnable, Supplier<RuntimeException> exception) {
+    public static void nullThrow(Runnable runnable, Supplier<? extends RuntimeException> exception) {
         try { runnable.run(); } catch (NullPointerException nullPoint) { throw exception.get(); }
     }
 
@@ -91,7 +91,7 @@ public class NullSafe {
         try { consumer.accept(arg); } catch (NullPointerException nullPoint) { throw exception; }
     }
 
-    public static <T> void nullThrow(T arg, Consumer<T> consumer, Supplier<RuntimeException> exception) {
+    public static <T> void nullThrow(T arg, Consumer<T> consumer, Supplier<? extends RuntimeException> exception) {
         try { consumer.accept(arg); } catch (NullPointerException nullPoint) { throw exception.get(); }
     }
 
@@ -120,7 +120,7 @@ public class NullSafe {
         try { return fn.apply(arg); } catch (NullPointerException nullPoint) { throw exception; }
     }
 
-    public static <T, R> R nullThrow(T arg, Function<T, R> fn, Supplier<RuntimeException> exception) {
+    public static <T, R> R nullThrow(T arg, Function<T, R> fn, Supplier<? extends RuntimeException> exception) {
         try { return fn.apply(arg); } catch (NullPointerException nullPoint) { throw exception.get(); }
     }
 
@@ -146,7 +146,7 @@ public class NullSafe {
             return () -> NullSafe.nullDefault(supplier, defaultValue);
         }
 
-        public static <T> Supplier<T> nullThrow(Supplier<T> supplier, Supplier<RuntimeException> exception) {
+        public static <T> Supplier<T> nullThrow(Supplier<T> supplier, Supplier<? extends RuntimeException> exception) {
             return () -> NullSafe.nullThrow(supplier, exception);
         }
 
@@ -162,7 +162,7 @@ public class NullSafe {
             return () -> NullSafe.nullThen(runnable, handleNull);
         }
 
-        public Runnable nullThrow(Runnable runnable, Supplier<RuntimeException> exception) {
+        public Runnable nullThrow(Runnable runnable, Supplier<? extends RuntimeException> exception) {
             return () -> NullSafe.nullThrow(runnable, exception);
         }
 
@@ -182,7 +182,7 @@ public class NullSafe {
             return t -> NullSafe.nullThrow(t, consumer, exception);
         }
 
-        public static <T> Consumer<T> nullThrow(Consumer<T> consumer, Supplier<RuntimeException> exception) {
+        public static <T> Consumer<T> nullThrow(Consumer<T> consumer, Supplier<? extends RuntimeException> exception) {
             return t -> NullSafe.nullThrow(t, consumer, exception);
         }
 
@@ -206,7 +206,7 @@ public class NullSafe {
             return t -> NullSafe.nullThrow(t, fn, exception);
         }
 
-        public static <T, R> Function<T, R> nullThrow(Function<T, R> fn, Supplier<RuntimeException> exception) {
+        public static <T, R> Function<T, R> nullThrow(Function<T, R> fn, Supplier<? extends RuntimeException> exception) {
             return t -> NullSafe.nullThrow(t, fn, exception);
         }
     }
