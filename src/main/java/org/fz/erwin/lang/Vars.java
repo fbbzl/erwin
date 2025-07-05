@@ -17,7 +17,7 @@ import java.util.function.Supplier;
  * @since 2020/1/2/002 11:52
  */
 @UtilityClass
-public class Variables {
+public class Vars {
     private static final NoticeSupplier
             REQUIRE_TRUE                 = () -> "require true but still false",
             REQUIRE_FALSE                = () -> "require false but still true",
