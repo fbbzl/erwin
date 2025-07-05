@@ -14,10 +14,9 @@ import java.util.function.Supplier;
  * Example: NullSafe.nullDefault(() -> user.getName().getLength(), "xx")
  * <p>
  * In this case, the user object is null, and the whole method will return the specified default value "xx"
- *
+ * All Lambdas in this class are forbidden to use method references instead!!!!!
  * @author fengbinbin
  * @version 1.0
- * @apiNote All Lambdas in this class are forbidden to use method references instead!!!!!
  * @since 2024/5/30 11:04
  */
 

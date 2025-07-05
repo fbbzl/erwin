@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 /**
  * Exception tool class All static methods are composed of an expression and an exceptionNotice. When the expression
@@ -28,7 +29,7 @@ public final class Throws {
             TYPE_NULL       = () -> "type can not be null",
             INSTANCED_NULL  = () -> "instanced object can not be null";
 
-    public static void ifTrue(Object expression, ExceptionSupplier exception) {
+    public static void ifTrue(Object expression, Supplier<? extends RuntimeException> exception) {
         if (Objects.equals(expression, Boolean.TRUE)) throw exception.get();
     }
 
@@ -36,7 +37,7 @@ public final class Throws {
         ifTrue(expression, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifFalse(Object expression, ExceptionSupplier exception) {
+    public static void ifFalse(Object expression, Supplier<? extends RuntimeException> exception) {
         if (Objects.equals(expression, Boolean.FALSE)) throw exception.get();
     }
 
@@ -44,7 +45,7 @@ public final class Throws {
         ifFalse(expression, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifNull(Object object, ExceptionSupplier exception) {
+    public static void ifNull(Object object, Supplier<? extends RuntimeException> exception) {
         if (object == null) throw exception.get();
     }
 
@@ -52,7 +53,7 @@ public final class Throws {
         ifNull(object, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifNotNull(Object object, ExceptionSupplier exception) {
+    public static void ifNotNull(Object object, Supplier<? extends RuntimeException> exception) {
         if (object != null) throw exception.get();
     }
 
@@ -60,7 +61,7 @@ public final class Throws {
         ifNotNull(object, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifEmpty(Object[] array, ExceptionSupplier exception) {
+    public static void ifEmpty(Object[] array, Supplier<? extends RuntimeException> exception) {
         if (array == null || array.length == 0) throw exception.get();
     }
 
@@ -68,7 +69,7 @@ public final class Throws {
         ifEmpty(array, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifNotEmpty(Object[] array, ExceptionSupplier exception) {
+    public static void ifNotEmpty(Object[] array, Supplier<? extends RuntimeException> exception) {
         if (array != null && array.length > 0) throw exception.get();
     }
 
@@ -76,7 +77,7 @@ public final class Throws {
         ifNotEmpty(array, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifEmpty(Collection<?> collection, ExceptionSupplier exception) {
+    public static void ifEmpty(Collection<?> collection, Supplier<? extends RuntimeException> exception) {
         if (collection == null || collection.isEmpty()) throw exception.get();
     }
 
@@ -84,7 +85,7 @@ public final class Throws {
         ifEmpty(collection, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifEmpty(Map<?, ?> map, ExceptionSupplier exception) {
+    public static void ifEmpty(Map<?, ?> map, Supplier<? extends RuntimeException> exception) {
         if (map == null || map.isEmpty()) throw exception.get();
     }
 
@@ -92,7 +93,7 @@ public final class Throws {
         ifEmpty(map, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifNotEmpty(Collection<?> collection, ExceptionSupplier exception) {
+    public static void ifNotEmpty(Collection<?> collection, Supplier<? extends RuntimeException> exception) {
         if (collection != null && !collection.isEmpty()) throw exception.get();
     }
 
@@ -100,7 +101,7 @@ public final class Throws {
         ifNotEmpty(collection, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifNotEmpty(Map<?, ?> map, ExceptionSupplier exception) {
+    public static void ifNotEmpty(Map<?, ?> map, Supplier<? extends RuntimeException> exception) {
         if (map != null && !map.isEmpty()) throw exception.get();
     }
 
@@ -108,7 +109,7 @@ public final class Throws {
         ifNotEmpty(map, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifEmpty(String text, ExceptionSupplier exception) {
+    public static void ifEmpty(String text, Supplier<? extends RuntimeException> exception) {
         if (text == null || text.isEmpty()) throw exception.get();
     }
 
@@ -116,7 +117,7 @@ public final class Throws {
         ifEmpty(text, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifNotEmpty(String text, ExceptionSupplier exception) {
+    public static void ifNotEmpty(String text, Supplier<? extends RuntimeException> exception) {
         if (text != null && !text.isEmpty()) throw exception.get();
     }
 
@@ -124,7 +125,7 @@ public final class Throws {
         ifNotEmpty(text, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifBlank(String text, ExceptionSupplier exception) {
+    public static void ifBlank(String text, Supplier<? extends RuntimeException> exception) {
         if (text == null || text.trim().isEmpty()) throw exception.get();
     }
 
@@ -132,7 +133,7 @@ public final class Throws {
         ifBlank(text, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifNotBlank(String text, ExceptionSupplier exception) {
+    public static void ifNotBlank(String text, Supplier<? extends RuntimeException> exception) {
         if (text != null && !text.trim().isEmpty()) throw exception.get();
     }
 
@@ -140,7 +141,7 @@ public final class Throws {
         ifNotBlank(text, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifEquals(Object l, Object r, ExceptionSupplier exception) {
+    public static void ifEquals(Object l, Object r, Supplier<? extends RuntimeException> exception) {
         if (Objects.equals(l, r)) throw exception.get();
     }
 
@@ -148,7 +149,7 @@ public final class Throws {
         ifEquals(l, r, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifNotEquals(Object l, Object r, ExceptionSupplier exception) {
+    public static void ifNotEquals(Object l, Object r, Supplier<? extends RuntimeException> exception) {
         if (!Objects.equals(l, r)) throw exception.get();
     }
 
@@ -156,7 +157,7 @@ public final class Throws {
         ifNotEquals(l, r, () -> new RuntimeException(notice.get()));
     }
 
-    public static <T> void ifContains(Collection<T> collection, T element, ExceptionSupplier exception) {
+    public static <T> void ifContains(Collection<T> collection, T element, Supplier<? extends RuntimeException> exception) {
         ifNull(collection, COLLECTION_NULL);
         ifNull(element, ELEMENT_NULL);
 
@@ -167,7 +168,7 @@ public final class Throws {
         ifContains(collection, element, () -> new RuntimeException(notice.get()));
     }
 
-    public static <T> void ifNotContains(Collection<T> collection, T element, ExceptionSupplier exception) {
+    public static <T> void ifNotContains(Collection<T> collection, T element, Supplier<? extends RuntimeException> exception) {
         ifNull(collection, COLLECTION_NULL);
         ifNull(element, ELEMENT_NULL);
 
@@ -182,7 +183,7 @@ public final class Throws {
         ifContains(origin, target, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifContains(CharSequence origin, CharSequence target, ExceptionSupplier exception) {
+    public static void ifContains(CharSequence origin, CharSequence target, Supplier<? extends RuntimeException> exception) {
         if (origin == null || target == null || origin.toString().contains(target)) throw exception.get();
     }
 
@@ -190,11 +191,11 @@ public final class Throws {
         ifNotContains(origin, target, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifNotContains(CharSequence origin, CharSequence target, ExceptionSupplier exception) {
+    public static void ifNotContains(CharSequence origin, CharSequence target, Supplier<? extends RuntimeException> exception) {
         if (origin == null || target == null || !origin.toString().contains(target)) throw exception.get();
     }
 
-    public static <K, V> void ifContainsKey(Map<K, V> map, K key, ExceptionSupplier exception) {
+    public static <K, V> void ifContainsKey(Map<K, V> map, K key, Supplier<? extends RuntimeException> exception) {
         ifNull(map, MAP_NULL);
         ifNull(key, KEY_NULL);
 
@@ -205,7 +206,7 @@ public final class Throws {
         ifContainsKey(map, key, () -> new RuntimeException(notice.get()));
     }
 
-    public static <K, V> void ifNotContainsKey(Map<K, V> map, K key, ExceptionSupplier exception) {
+    public static <K, V> void ifNotContainsKey(Map<K, V> map, K key, Supplier<? extends RuntimeException> exception) {
         ifNull(map, MAP_NULL);
         ifNull(key, KEY_NULL);
 
@@ -216,7 +217,7 @@ public final class Throws {
         ifNotContainsKey(map, key, () -> new RuntimeException(notice.get()));
     }
 
-    public static <K, V> void ifContainsValue(Map<K, V> map, V value, ExceptionSupplier exception) {
+    public static <K, V> void ifContainsValue(Map<K, V> map, V value, Supplier<? extends RuntimeException> exception) {
         ifNull(map, MAP_NULL);
         ifNull(value, VALUE_NULL);
 
@@ -227,7 +228,7 @@ public final class Throws {
         ifContainsValue(map, value, () -> new RuntimeException(notice.get()));
     }
 
-    public static <K, V> void ifNotContainsValue(Map<K, V> map, V value, ExceptionSupplier exception) {
+    public static <K, V> void ifNotContainsValue(Map<K, V> map, V value, Supplier<? extends RuntimeException> exception) {
         ifNull(map, MAP_NULL);
         ifNull(value, VALUE_NULL);
 
@@ -238,7 +239,7 @@ public final class Throws {
         ifNotContainsValue(map, value, () -> new RuntimeException(notice.get()));
     }
 
-    public static <T> void ifInstanceOf(Class<?> type, T object, ExceptionSupplier exception) {
+    public static <T> void ifInstanceOf(Class<?> type, T object, Supplier<? extends RuntimeException> exception) {
         Throws.ifNull(type, TYPE_NULL);
         Throws.ifNull(object, INSTANCED_NULL);
 
@@ -249,7 +250,7 @@ public final class Throws {
         ifInstanceOf(type, object, () -> new RuntimeException(notice.get()));
     }
 
-    public static <T> void ifNotInstanceOf(Class<?> type, T object, ExceptionSupplier exception) {
+    public static <T> void ifNotInstanceOf(Class<?> type, T object, Supplier<? extends RuntimeException> exception) {
         Throws.ifNull(type, TYPE_NULL);
         Throws.ifNull(object, INSTANCED_NULL);
 
@@ -260,7 +261,7 @@ public final class Throws {
         ifNotInstanceOf(type, object, () -> new RuntimeException(notice.get()));
     }
 
-    public static <T> void ifHasNullElement(Collection<T> collection, ExceptionSupplier exception) {
+    public static <T> void ifHasNullElement(Collection<T> collection, Supplier<? extends RuntimeException> exception) {
         Throws.ifNull(collection, COLLECTION_NULL);
 
         for (T t : collection) Throws.ifNull(t, exception);
@@ -270,7 +271,7 @@ public final class Throws {
         ifHasNullElement(collection, () -> new RuntimeException(notice.get()));
     }
 
-    public static <T> void ifHasNullElement(T[] array, ExceptionSupplier exception) {
+    public static <T> void ifHasNullElement(T[] array, Supplier<? extends RuntimeException> exception) {
         Throws.ifNull(array, ARRAY_NULL);
 
         for (T t : array) Throws.ifNull(t, exception);
@@ -284,7 +285,7 @@ public final class Throws {
         ifAssignable(superType, subType, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifAssignable(Class<?> superType, Class<?> subType, ExceptionSupplier exception) {
+    public static void ifAssignable(Class<?> superType, Class<?> subType, Supplier<? extends RuntimeException> exception) {
         if (superType == null || subType == null || superType.isAssignableFrom(subType)) throw exception.get();
     }
 
@@ -292,7 +293,7 @@ public final class Throws {
         ifNotAssignable(superType, subType, () -> new RuntimeException(notice.get()));
     }
 
-    public static void ifNotAssignable(Class<?> superType, Class<?> subType, ExceptionSupplier exception) {
+    public static void ifNotAssignable(Class<?> superType, Class<?> subType, Supplier<? extends RuntimeException> exception) {
         if (superType == null || subType == null || !superType.isAssignableFrom(subType)) throw exception.get();
     }
 
@@ -301,19 +302,7 @@ public final class Throws {
      * @since 2017/4/2/038 11:52
      */
     @FunctionalInterface
-    public static interface ExceptionSupplier {
-        /**
-         * get one exception
-         */
-        RuntimeException get();
-    }
-
-    /**
-     * @author fengbinbin
-     * @since 2017/4/2/038 11:52
-     */
-    @FunctionalInterface
-    public static interface NoticeSupplier {
+    public interface NoticeSupplier {
         /**
          * get one exception notice
          */
