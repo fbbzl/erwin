@@ -50,6 +50,7 @@
 
         <lombok.version>1.18.34</lombok.version>
         <hutool-core.version>5.8.29</hutool-core.version>
+        <vavr.version>0.10.6</vavr.version>
     </properties>
 
     <dependencies>
@@ -70,6 +71,13 @@
             <artifactId>hutool-system</artifactId>
             <version>${hutool-core.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.vavr</groupId>
+            <artifactId>vavr</artifactId>
+            <version>${vavr.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
