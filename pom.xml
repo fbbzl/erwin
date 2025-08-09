@@ -50,6 +50,7 @@
 
         <lombok.version>1.18.34</lombok.version>
         <hutool-core.version>5.8.29</hutool-core.version>
+        <failsafe.version>3.3.2</failsafe.version>
     </properties>
 
     <dependencies>
@@ -69,6 +70,12 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-system</artifactId>
             <version>${hutool-core.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>dev.failsafe</groupId>
+            <artifactId>failsafe</artifactId>
+            <version>${failsafe.version}</version>
         </dependency>
     </dependencies>
 
