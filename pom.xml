@@ -49,7 +49,7 @@
         <nexus-staging-maven-plugin-version>1.6.7</nexus-staging-maven-plugin-version>
 
         <lombok.version>1.18.34</lombok.version>
-        <hutool-core.version>5.8.29</hutool-core.version>
+        <hutool-all.version>5.8.39</hutool-all.version>
         <failsafe.version>3.3.2</failsafe.version>
     </properties>
 
@@ -62,14 +62,8 @@
 
         <dependency>
             <groupId>cn.hutool</groupId>
-            <artifactId>hutool-core</artifactId>
-            <version>${hutool-core.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-system</artifactId>
-            <version>${hutool-core.version}</version>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool-all.version}</version>
         </dependency>
 
         <dependency>
