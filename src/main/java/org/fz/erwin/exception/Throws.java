@@ -10,8 +10,7 @@ import java.util.function.Supplier;
 
 /**
  * Exception tool class All static methods are composed of an expression and an exceptionNotice. When the expression
- * is established, an exception will be
- * thrown with the specified exceptionNotice
+ * is established, an exception will be thrown with the specified exceptionNotice
  *
  * @author fengbinbin
  * @since 2017/4/2/038 11:52
