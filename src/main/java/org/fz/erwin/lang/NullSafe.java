@@ -21,6 +21,7 @@ import java.util.function.Supplier;
  * @since 2024/5/30 11:04
  */
 
+@SuppressWarnings("unchecked")
 @UtilityClass
 public class NullSafe {
 
@@ -37,8 +38,8 @@ public class NullSafe {
         }
     }
 
-    public static <T> T nullDefault(Supplier<T> supplier, T defaultValue) {
-        try { return supplier.get(); } catch (NullPointerException nullPoint) { return defaultValue; }
+    public static <T> T nullDefault(Supplier<T> supplier, Object defaultValue) {
+        try { return supplier.get(); } catch (NullPointerException nullPoint) { return (T) defaultValue; }
     }
 
     public static <T> T nullDefault(Supplier<T> supplier, Supplier<T> defaultValue) {
@@ -108,8 +109,8 @@ public class NullSafe {
         }
     }
 
-    public static <T, R> R nullDefault(T arg, Function<T, R> fn, R defaultValue) {
-        try { return fn.apply(arg); } catch (NullPointerException nullPoint) { return defaultValue; }
+    public static <T, R> R nullDefault(T arg, Function<T, R> fn, Object defaultValue) {
+        try { return fn.apply(arg); } catch (NullPointerException nullPoint) { return (R) defaultValue; }
     }
 
     public static <T, R> R nullDefault(T arg, Function<T, R> fn, Supplier<R> defaultValue) {
@@ -138,7 +139,7 @@ public class NullSafe {
             return () -> NullSafe.nullThen(supplier, handleNull);
         }
 
-        public static <T> Supplier<T> nullDefault(Supplier<T> supplier, T defaultValue) {
+        public static <T> Supplier<T> nullDefault(Supplier<T> supplier, Object defaultValue) {
             return () -> NullSafe.nullDefault(supplier, defaultValue);
         }
 
@@ -194,8 +195,8 @@ public class NullSafe {
             return t -> NullSafe.nullThen(t, fn, handleNull);
         }
 
-        public static <T, R> Function<T, R> nullDefault(Function<T, R> fn, R defaultValue) {
-            return t -> NullSafe.nullDefault(t, fn, defaultValue);
+        public static <T, R> Function<T, R> nullDefault(Function<T, R> fn, Object defaultValue) {
+            return t -> NullSafe.nullDefault(t, fn, (R) defaultValue);
         }
 
         public static <T, R> Function<T, R> nullDefault(Function<T, R> fn, Supplier<R> defaultValue) {
@@ -207,7 +208,7 @@ public class NullSafe {
         }
 
         public static <T, R, E extends RuntimeException> Function<T, R> nullThrow(Function<T, R> fn,
-                                                      Supplier<E> exception) {
+                                                                                  Supplier<E> exception) {
             return t -> NullSafe.nullThrow(t, fn, exception);
         }
     }
