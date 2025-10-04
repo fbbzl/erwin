@@ -51,6 +51,7 @@
         <lombok.version>1.18.34</lombok.version>
         <hutool-all.version>5.8.40</hutool-all.version>
         <failsafe.version>3.3.2</failsafe.version>
+        <asm.version>9.6</asm.version>
     </properties>
 
     <dependencies>
@@ -70,6 +71,13 @@
             <groupId>dev.failsafe</groupId>
             <artifactId>failsafe</artifactId>
             <version>${failsafe.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>${asm.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
