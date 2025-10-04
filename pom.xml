@@ -37,8 +37,8 @@
 
     <properties>
         <!--build-->
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
@@ -49,7 +49,7 @@
         <nexus-staging-maven-plugin-version>1.6.7</nexus-staging-maven-plugin-version>
 
         <lombok.version>1.18.34</lombok.version>
-        <hutool-all.version>5.8.39</hutool-all.version>
+        <hutool-all.version>5.8.40</hutool-all.version>
         <failsafe.version>3.3.2</failsafe.version>
     </properties>
 
