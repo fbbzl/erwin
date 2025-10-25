@@ -125,10 +125,11 @@ public class NullSafe {
         try { return fn.apply(arg); } catch (NullPointerException nullPoint) { throw exception.get(); }
     }
 
+
     /**
      * wrap the lambda and handle null pointer exceptions
      */
-    final static class NullSafeLambda {
+    public final static class NullSafeLambda {
 
         public static <T> Supplier<T> nullable(Supplier<T> supplier) {
             return nullThen(supplier, null);
@@ -146,8 +147,7 @@ public class NullSafe {
             return () -> NullSafe.nullDefault(supplier, defaultValue);
         }
 
-        public static <T, E extends RuntimeException> Supplier<T> nullThrow(Supplier<T> supplier,
-                                                                            Supplier<E> exception) {
+        public static <T, E extends RuntimeException> Supplier<T> nullThrow(Supplier<T> supplier, Supplier<E> exception) {
             return () -> NullSafe.nullThrow(supplier, exception);
         }
 
@@ -183,8 +183,7 @@ public class NullSafe {
             return t -> NullSafe.nullThrow(t, consumer, exception);
         }
 
-        public static <T, E extends RuntimeException> Consumer<T> nullThrow(Consumer<T> consumer,
-                                                                            Supplier<E> exception) {
+        public static <T, E extends RuntimeException> Consumer<T> nullThrow(Consumer<T> consumer, Supplier<E> exception) {
             return t -> NullSafe.nullThrow(t, consumer, exception);
         }
 
