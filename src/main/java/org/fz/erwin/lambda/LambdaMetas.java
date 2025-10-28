@@ -7,8 +7,8 @@ import java.lang.invoke.*;
 import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
-import java.util.Arrays;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -43,10 +43,10 @@ public class LambdaMetas {
         }
     }
 
-    public static <P, T> Function<P, T> lambdaConstructor(Class<T> clazz, Class<P> paramType) {
+    public static <P, T> Function<P, T> lambdaConstructor(Class<T> clazz, Class<P> p0Type) {
         try {
             Lookup lookup = MethodHandles.lookup();
-            MethodHandle constructorHandle = lookup.findConstructor(clazz, methodType(void.class, paramType));
+            MethodHandle constructorHandle = lookup.findConstructor(clazz, methodType(void.class, p0Type));
 
             CallSite site = LambdaMetafactory.metafactory(
                     lookup,
@@ -59,31 +59,27 @@ public class LambdaMetas {
             return (Function<P, T>) site.getTarget().invokeExact();
         }
         catch (Throwable throwable) {
-            throw new LambdasException("can not generate lambda constructor for class [" + clazz + "], param type: [" + paramType + "]", throwable);
+            throw new LambdasException("can not generate lambda constructor for class [" + clazz + "], param type: [" + p0Type + "]", throwable);
         }
     }
 
-    public static <T> Function<Object[], T> lambdaConstructor(Class<T> clazz, Class<?>... paramTypes) {
+    public static <P, B, T> BiFunction<P, B, T> lambdaConstructor(Class<T> clazz, Class<P> p0Type, Class<B> p1Type) {
         try {
-            Lookup lookup = MethodHandles.lookup();
-
-            MethodHandle constructorHandle =
-                    lookup.findConstructor(clazz, methodType(void.class, paramTypes))
-                          .asCollector(Object[].class, paramTypes.length);
+            Lookup       lookup            = MethodHandles.lookup();
+            MethodHandle constructorHandle = lookup.findConstructor(clazz, methodType(void.class, p0Type, p1Type));
 
             CallSite site = LambdaMetafactory.metafactory(
                     lookup,
                     "apply",
-                    MethodType.methodType(Function.class),
-                    methodType(Object.class, Object.class),
+                    MethodType.methodType(BiFunction.class),
+                    constructorHandle.type().generic(),
                     constructorHandle,
-                    methodType(clazz, Object[].class));
+                    constructorHandle.type());
 
-            return (Function<Object[], T>) site.getTarget().invokeExact();
-        } catch (Throwable e) {
-            throw new RuntimeException(
-                    "Failed to create lambda constructor for " + clazz +
-                    " with parameter types: " + Arrays.toString(paramTypes), e);
+            return (BiFunction<P, B, T>) site.getTarget().invokeExact();
+        }
+        catch (Throwable throwable) {
+            throw new LambdasException("can not generate lambda constructor for class [" + clazz + "], param type: [" + p0Type + "]", throwable);
         }
     }
 
