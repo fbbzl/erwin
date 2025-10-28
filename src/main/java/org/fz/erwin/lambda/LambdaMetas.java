@@ -7,6 +7,7 @@ import java.lang.invoke.*;
 import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -22,10 +23,10 @@ import static java.lang.invoke.MethodType.methodType;
 @UtilityClass
 @SuppressWarnings("unchecked")
 public class LambdaMetas {
-    public static <T> Supplier<T> lambdaConstructor(Type clazz) {
+    public static <T> Supplier<T> lambdaConstructor(Class<T> clazz) {
         try {
             Lookup       lookup            = MethodHandles.lookup();
-            MethodHandle constructorHandle = lookup.findConstructor((Class<T>) clazz, methodType(void.class));
+            MethodHandle constructorHandle = lookup.findConstructor(clazz, methodType(void.class));
 
             CallSite site = LambdaMetafactory.metafactory(
                     lookup,
@@ -42,11 +43,10 @@ public class LambdaMetas {
         }
     }
 
-    public static <P, T> Function<P, T> lambdaConstructor(Type clazz, Class<P> paramType) {
+    public static <P, T> Function<P, T> lambdaConstructor(Class<T> clazz, Class<P> paramType) {
         try {
             Lookup lookup = MethodHandles.lookup();
-            MethodHandle constructorHandle = lookup.findConstructor((Class<T>) clazz, methodType(void.class,
-                                                                                                 paramType));
+            MethodHandle constructorHandle = lookup.findConstructor(clazz, methodType(void.class, paramType));
 
             CallSite site = LambdaMetafactory.metafactory(
                     lookup,
@@ -60,6 +60,30 @@ public class LambdaMetas {
         }
         catch (Throwable throwable) {
             throw new LambdasException("can not generate lambda constructor for class [" + clazz + "], param type: [" + paramType + "]", throwable);
+        }
+    }
+
+    public static <T> Function<Object[], T> lambdaConstructor(Class<T> clazz, Class<?>... paramTypes) {
+        try {
+            Lookup lookup = MethodHandles.lookup();
+
+            MethodHandle constructorHandle =
+                    lookup.findConstructor(clazz, methodType(void.class, paramTypes))
+                          .asCollector(Object[].class, paramTypes.length);
+
+            CallSite site = LambdaMetafactory.metafactory(
+                    lookup,
+                    "apply",
+                    MethodType.methodType(Function.class),
+                    methodType(Object.class, Object.class),
+                    constructorHandle,
+                    methodType(clazz, Object[].class));
+
+            return (Function<Object[], T>) site.getTarget().invokeExact();
+        } catch (Throwable e) {
+            throw new RuntimeException(
+                    "Failed to create lambda constructor for " + clazz +
+                    " with parameter types: " + Arrays.toString(paramTypes), e);
         }
     }
 
