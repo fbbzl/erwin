@@ -301,10 +301,6 @@ public final class Throws {
      * @since 2017/4/2/038 11:52
      */
     @FunctionalInterface
-    public interface NoticeSupplier {
-        /**
-         * get one exception notice
-         */
-        String get();
+    public interface NoticeSupplier extends Supplier<String> {
     }
 }
