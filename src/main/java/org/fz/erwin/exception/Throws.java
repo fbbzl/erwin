@@ -29,67 +29,67 @@ public final class Throws {
             INSTANCED_NULL  = () -> "instanced object can not be null";
 
     public static void ifTrue(Object expression, Supplier<String> notice) {
-        if (Objects.equals(expression, Boolean.TRUE)) throw new RuntimeException(notice.get());
+        if (Objects.equals(expression, Boolean.TRUE)) throw new IllegalArgumentException(notice.get());
     }
 
     public static void ifFalse(Object expression, Supplier<String> notice) {
-        if (Objects.equals(expression, Boolean.FALSE)) throw new RuntimeException(notice.get());
+        if (Objects.equals(expression, Boolean.FALSE)) throw new IllegalArgumentException(notice.get());
     }
 
     public static void ifNull(Object object, Supplier<String> notice) {
-        if (object == null) throw new RuntimeException(notice.get());
+        if (object == null) throw new IllegalArgumentException(notice.get());
     }
 
     public static void ifNotNull(Object object, Supplier<String> notice) {
-        if (object != null) throw new RuntimeException(notice.get());
+        if (object != null) throw new IllegalArgumentException(notice.get());
     }
 
     public static void ifEmpty(Object[] array, Supplier<String> notice) {
-        if (array == null || array.length == 0) throw new RuntimeException(notice.get());
+        if (array == null || array.length == 0) throw new IllegalArgumentException(notice.get());
     }
 
     public static void ifNotEmpty(Object[] array, Supplier<String> notice) {
-        if (array != null && array.length > 0) throw new RuntimeException(notice.get());
+        if (array != null && array.length > 0) throw new IllegalArgumentException(notice.get());
     }
 
     public static void ifEmpty(Collection<?> collection, Supplier<String> notice) {
-        if (collection == null || collection.isEmpty()) throw new RuntimeException(notice.get());
+        if (collection == null || collection.isEmpty()) throw new IllegalArgumentException(notice.get());
     }
 
     public static void ifEmpty(Map<?, ?> map, Supplier<String> notice) {
-        if (map == null || map.isEmpty()) throw new RuntimeException(notice.get());
+        if (map == null || map.isEmpty()) throw new IllegalArgumentException(notice.get());
     }
 
     public static void ifNotEmpty(Collection<?> collection, Supplier<String> notice) {
-        if (collection != null && !collection.isEmpty()) throw new RuntimeException(notice.get());
+        if (collection != null && !collection.isEmpty()) throw new IllegalArgumentException(notice.get());
     }
 
     public static void ifNotEmpty(Map<?, ?> map, Supplier<String> notice) {
-        if (map != null && !map.isEmpty()) throw new RuntimeException(notice.get());
+        if (map != null && !map.isEmpty()) throw new IllegalArgumentException(notice.get());
     }
 
     public static void ifEmpty(String text, Supplier<String> notice) {
-        if (text == null || text.isEmpty()) throw new RuntimeException(notice.get());
+        if (text == null || text.isEmpty()) throw new IllegalArgumentException(notice.get());
     }
 
     public static void ifNotEmpty(String text, Supplier<String> notice) {
-        if (text != null && !text.isEmpty()) throw new RuntimeException(notice.get());
+        if (text != null && !text.isEmpty()) throw new IllegalArgumentException(notice.get());
     }
 
     public static void ifBlank(String text, Supplier<String> notice) {
-        if (text == null || text.trim().isEmpty()) throw new RuntimeException(notice.get());
+        if (text == null || text.trim().isEmpty()) throw new IllegalArgumentException(notice.get());
     }
 
     public static void ifNotBlank(String text, Supplier<String> notice) {
-        if (text != null && !text.trim().isEmpty()) throw new RuntimeException(notice.get());
+        if (text != null && !text.trim().isEmpty()) throw new IllegalArgumentException(notice.get());
     }
 
     public static void ifEquals(Object l, Object r, Supplier<String> notice) {
-        if (Objects.equals(l, r)) throw new RuntimeException(notice.get());
+        if (Objects.equals(l, r)) throw new IllegalArgumentException(notice.get());
     }
 
     public static void ifNotEquals(Object l, Object r, Supplier<String> notice) {
-        if (!Objects.equals(l, r)) throw new RuntimeException(notice.get());
+        if (!Objects.equals(l, r)) throw new IllegalArgumentException(notice.get());
     }
 
 
@@ -97,66 +97,66 @@ public final class Throws {
         ifNull(collection, COLLECTION_NULL);
         ifNull(element, ELEMENT_NULL);
 
-        if (collection.contains(element)) throw new RuntimeException(notice.get());
+        if (collection.contains(element)) throw new IllegalArgumentException(notice.get());
     }
 
     public static <T> void ifNotContains(Collection<T> collection, T element, Supplier<String> notice) {
         ifNull(collection, COLLECTION_NULL);
         ifNull(element, ELEMENT_NULL);
 
-        if (!collection.contains(element)) throw new RuntimeException(notice.get());
+        if (!collection.contains(element)) throw new IllegalArgumentException(notice.get());
     }
 
     public static void ifContains(CharSequence origin, CharSequence target, Supplier<String> notice) {
         if (origin == null || target == null || origin.toString().contains(target))
-            throw new RuntimeException(notice.get());
+            throw new IllegalArgumentException(notice.get());
     }
 
     public static void ifNotContains(CharSequence origin, CharSequence target, Supplier<String> notice) {
         if (origin == null || target == null || !origin.toString().contains(target))
-            throw new RuntimeException(notice.get());
+            throw new IllegalArgumentException(notice.get());
     }
 
     public static <K, V> void ifContainsKey(Map<K, V> map, K key, Supplier<String> notice) {
         ifNull(map, MAP_NULL);
         ifNull(key, KEY_NULL);
 
-        if (map.containsKey(key)) throw new RuntimeException(notice.get());
+        if (map.containsKey(key)) throw new IllegalArgumentException(notice.get());
     }
 
     public static <K, V> void ifNotContainsKey(Map<K, V> map, K key, Supplier<String> notice) {
         ifNull(map, MAP_NULL);
         ifNull(key, KEY_NULL);
 
-        if (!map.containsKey(key)) throw new RuntimeException(notice.get());
+        if (!map.containsKey(key)) throw new IllegalArgumentException(notice.get());
     }
 
     public static <K, V> void ifContainsValue(Map<K, V> map, V value, Supplier<String> notice) {
         ifNull(map, MAP_NULL);
         ifNull(value, VALUE_NULL);
 
-        if (map.containsValue(value)) throw new RuntimeException(notice.get());
+        if (map.containsValue(value)) throw new IllegalArgumentException(notice.get());
     }
 
     public static <K, V> void ifNotContainsValue(Map<K, V> map, V value, Supplier<String> notice) {
         ifNull(map, MAP_NULL);
         ifNull(value, VALUE_NULL);
 
-        if (!map.containsValue(value)) throw new RuntimeException(notice.get());
+        if (!map.containsValue(value)) throw new IllegalArgumentException(notice.get());
     }
 
     public static <T> void ifInstanceOf(Class<?> type, T object, Supplier<String> notice) {
         Throws.ifNull(type, TYPE_NULL);
         Throws.ifNull(object, INSTANCED_NULL);
 
-        if (type.isInstance(object)) throw new RuntimeException(notice.get());
+        if (type.isInstance(object)) throw new IllegalArgumentException(notice.get());
     }
 
     public static <T> void ifNotInstanceOf(Class<?> type, T object, Supplier<String> notice) {
         Throws.ifNull(type, TYPE_NULL);
         Throws.ifNull(object, INSTANCED_NULL);
 
-        if (!type.isInstance(object)) throw new RuntimeException(notice.get());
+        if (!type.isInstance(object)) throw new IllegalArgumentException(notice.get());
     }
 
     public static <T> void ifHasNullElement(Collection<T> collection, Supplier<String> notice) {
@@ -173,12 +173,12 @@ public final class Throws {
 
     public static void ifAssignable(Class<?> superType, Class<?> subType, Supplier<String> notice) {
         if (superType == null || subType == null || superType.isAssignableFrom(subType))
-            throw new RuntimeException(notice.get());
+            throw new IllegalArgumentException(notice.get());
     }
 
     public static void ifNotAssignable(Class<?> superType, Class<?> subType, Supplier<String> notice) {
         if (superType == null || subType == null || !superType.isAssignableFrom(subType))
-            throw new RuntimeException(notice.get());
+            throw new IllegalArgumentException(notice.get());
     }
 
 }
