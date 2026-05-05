@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
 
+import static cn.hutool.core.text.CharSequenceUtil.format;
+
 /**
  * Exception tool class All static methods are composed of an expression and an exceptionNotice. When the expression
  * is established, an exception will be thrown with the specified exceptionNotice
@@ -32,64 +34,128 @@ public final class Throws {
         if (Objects.equals(expression, Boolean.TRUE)) throw new IllegalArgumentException(notice.get());
     }
 
+    public static void ifTrue(Object expression, String notice, Object... params) {
+        ifTrue(expression, () -> format(notice, params));
+    }
+
     public static void ifFalse(Object expression, Supplier<String> notice) {
         if (Objects.equals(expression, Boolean.FALSE)) throw new IllegalArgumentException(notice.get());
+    }
+
+    public static void ifFalse(Object expression, String notice, Object... params) {
+        ifFalse(expression, () -> format(notice, params));
     }
 
     public static void ifNull(Object object, Supplier<String> notice) {
         if (object == null) throw new IllegalArgumentException(notice.get());
     }
 
+    public static void ifNull(Object object, String notice, Object... params) {
+        ifNull(object, () -> format(notice, params));
+    }
+
     public static void ifNotNull(Object object, Supplier<String> notice) {
         if (object != null) throw new IllegalArgumentException(notice.get());
+    }
+
+    public static void ifNotNull(Object object, String notice, Object... params) {
+        ifNotNull(object, () -> format(notice, params));
     }
 
     public static void ifEmpty(Object[] array, Supplier<String> notice) {
         if (array == null || array.length == 0) throw new IllegalArgumentException(notice.get());
     }
 
+    public static void ifEmpty(Object[] array, String notice, Object... params) {
+        ifEmpty(array, () -> format(notice, params));
+    }
+
     public static void ifNotEmpty(Object[] array, Supplier<String> notice) {
         if (array != null && array.length > 0) throw new IllegalArgumentException(notice.get());
+    }
+
+    public static void ifNotEmpty(Object[] array, String notice, Object... params) {
+        ifNotEmpty(array, () -> format(notice, params));
     }
 
     public static void ifEmpty(Collection<?> collection, Supplier<String> notice) {
         if (collection == null || collection.isEmpty()) throw new IllegalArgumentException(notice.get());
     }
 
+    public static void ifEmpty(Collection<?> collection, String notice, Object... params) {
+        ifEmpty(collection, () -> format(notice, params));
+    }
+
     public static void ifEmpty(Map<?, ?> map, Supplier<String> notice) {
         if (map == null || map.isEmpty()) throw new IllegalArgumentException(notice.get());
+    }
+
+    public static void ifEmpty(Map<?, ?> map, String notice, Object... params) {
+        ifEmpty(map, () -> format(notice, params));
     }
 
     public static void ifNotEmpty(Collection<?> collection, Supplier<String> notice) {
         if (collection != null && !collection.isEmpty()) throw new IllegalArgumentException(notice.get());
     }
 
+    public static void ifNotEmpty(Collection<?> collection, String notice, Object... params) {
+        ifNotEmpty(collection, () -> format(notice, params));
+    }
+
     public static void ifNotEmpty(Map<?, ?> map, Supplier<String> notice) {
         if (map != null && !map.isEmpty()) throw new IllegalArgumentException(notice.get());
+    }
+
+    public static void ifNotEmpty(Map<?, ?> map, String notice, Object... params) {
+        ifNotEmpty(map, () -> format(notice, params));
     }
 
     public static void ifEmpty(String text, Supplier<String> notice) {
         if (text == null || text.isEmpty()) throw new IllegalArgumentException(notice.get());
     }
 
+    public static void ifEmpty(String text, String notice, Object... params) {
+        ifEmpty(text, () -> format(notice, params));
+    }
+
     public static void ifNotEmpty(String text, Supplier<String> notice) {
         if (text != null && !text.isEmpty()) throw new IllegalArgumentException(notice.get());
+    }
+
+    public static void ifNotEmpty(String text, String notice, Object... params) {
+        ifNotEmpty(text, () -> format(notice, params));
     }
 
     public static void ifBlank(String text, Supplier<String> notice) {
         if (text == null || text.trim().isEmpty()) throw new IllegalArgumentException(notice.get());
     }
 
+    public static void ifBlank(String text, String notice, Object... params) {
+        ifBlank(text, () -> format(notice, params));
+    }
+
     public static void ifNotBlank(String text, Supplier<String> notice) {
         if (text != null && !text.trim().isEmpty()) throw new IllegalArgumentException(notice.get());
+    }
+
+    public static void ifNotBlank(String text, String notice, Object... params) {
+        ifNotBlank(text, () -> format(notice, params));
     }
 
     public static void ifEquals(Object l, Object r, Supplier<String> notice) {
         if (Objects.equals(l, r)) throw new IllegalArgumentException(notice.get());
     }
 
+    public static void ifEquals(Object l, Object r, String notice, Object... params) {
+        ifEquals(l, r, () -> format(notice, params));
+    }
+
     public static void ifNotEquals(Object l, Object r, Supplier<String> notice) {
         if (!Objects.equals(l, r)) throw new IllegalArgumentException(notice.get());
+    }
+
+    public static void ifNotEquals(Object l, Object r, String notice, Object... params) {
+        ifNotEquals(l, r, () -> format(notice, params));
     }
 
 
@@ -100,6 +166,10 @@ public final class Throws {
         if (collection.contains(element)) throw new IllegalArgumentException(notice.get());
     }
 
+    public static <T> void ifContains(Collection<T> collection, T element, String notice, Object... params) {
+        ifContains(collection, element, () -> format(notice, params));
+    }
+
     public static <T> void ifNotContains(Collection<T> collection, T element, Supplier<String> notice) {
         ifNull(collection, COLLECTION_NULL);
         ifNull(element, ELEMENT_NULL);
@@ -107,14 +177,26 @@ public final class Throws {
         if (!collection.contains(element)) throw new IllegalArgumentException(notice.get());
     }
 
+    public static <T> void ifNotContains(Collection<T> collection, T element, String notice, Object... params) {
+        ifNotContains(collection, element, () -> format(notice, params));
+    }
+
     public static void ifContains(CharSequence origin, CharSequence target, Supplier<String> notice) {
         if (origin == null || target == null || origin.toString().contains(target))
             throw new IllegalArgumentException(notice.get());
     }
 
+    public static void ifContains(CharSequence origin, CharSequence target, String notice, Object... params) {
+        ifContains(origin, target, () -> format(notice, params));
+    }
+
     public static void ifNotContains(CharSequence origin, CharSequence target, Supplier<String> notice) {
         if (origin == null || target == null || !origin.toString().contains(target))
             throw new IllegalArgumentException(notice.get());
+    }
+
+    public static void ifNotContains(CharSequence origin, CharSequence target, String notice, Object... params) {
+        ifNotContains(origin, target, () -> format(notice, params));
     }
 
     public static <K, V> void ifContainsKey(Map<K, V> map, K key, Supplier<String> notice) {
@@ -124,11 +206,19 @@ public final class Throws {
         if (map.containsKey(key)) throw new IllegalArgumentException(notice.get());
     }
 
+    public static <K, V> void ifContainsKey(Map<K, V> map, K key, String notice, Object... params) {
+        ifContainsKey(map, key, () -> format(notice, params));
+    }
+
     public static <K, V> void ifNotContainsKey(Map<K, V> map, K key, Supplier<String> notice) {
         ifNull(map, MAP_NULL);
         ifNull(key, KEY_NULL);
 
         if (!map.containsKey(key)) throw new IllegalArgumentException(notice.get());
+    }
+
+    public static <K, V> void ifNotContainsKey(Map<K, V> map, K key, String notice, Object... params) {
+        ifNotContainsKey(map, key, () -> format(notice, params));
     }
 
     public static <K, V> void ifContainsValue(Map<K, V> map, V value, Supplier<String> notice) {
@@ -138,11 +228,19 @@ public final class Throws {
         if (map.containsValue(value)) throw new IllegalArgumentException(notice.get());
     }
 
+    public static <K, V> void ifContainsValue(Map<K, V> map, V value, String notice, Object... params) {
+        ifContainsValue(map, value, () -> format(notice, params));
+    }
+
     public static <K, V> void ifNotContainsValue(Map<K, V> map, V value, Supplier<String> notice) {
         ifNull(map, MAP_NULL);
         ifNull(value, VALUE_NULL);
 
         if (!map.containsValue(value)) throw new IllegalArgumentException(notice.get());
+    }
+
+    public static <K, V> void ifNotContainsValue(Map<K, V> map, V value, String notice, Object... params) {
+        ifNotContainsValue(map, value, () -> format(notice, params));
     }
 
     public static <T> void ifInstanceOf(Class<?> type, T object, Supplier<String> notice) {
@@ -152,11 +250,19 @@ public final class Throws {
         if (type.isInstance(object)) throw new IllegalArgumentException(notice.get());
     }
 
+    public static <T> void ifInstanceOf(Class<?> type, T object, String notice, Object... params) {
+        ifInstanceOf(type, object, () -> format(notice, params));
+    }
+
     public static <T> void ifNotInstanceOf(Class<?> type, T object, Supplier<String> notice) {
         Throws.ifNull(type, TYPE_NULL);
         Throws.ifNull(object, INSTANCED_NULL);
 
         if (!type.isInstance(object)) throw new IllegalArgumentException(notice.get());
+    }
+
+    public static <T> void ifNotInstanceOf(Class<?> type, T object, String notice, Object... params) {
+        ifNotInstanceOf(type, object, () -> format(notice, params));
     }
 
     public static <T> void ifHasNullElement(Collection<T> collection, Supplier<String> notice) {
@@ -165,10 +271,18 @@ public final class Throws {
         for (T t : collection) Throws.ifNull(t, notice);
     }
 
+    public static <T> void ifHasNullElement(Collection<T> collection, String notice, Object... params) {
+        ifHasNullElement(collection, () -> format(notice, params));
+    }
+
     public static <T> void ifHasNullElement(T[] array, Supplier<String> notice) {
         Throws.ifNull(array, ARRAY_NULL);
 
         for (T t : array) Throws.ifNull(t, notice);
+    }
+
+    public static <T> void ifHasNullElement(T[] array, String notice, Object... params) {
+        ifHasNullElement(array, () -> format(notice, params));
     }
 
     public static void ifAssignable(Class<?> superType, Class<?> subType, Supplier<String> notice) {
@@ -176,9 +290,17 @@ public final class Throws {
             throw new IllegalArgumentException(notice.get());
     }
 
+    public static void ifAssignable(Class<?> superType, Class<?> subType, String notice, Object... params) {
+        ifAssignable(superType, subType, () -> format(notice, params));
+    }
+
     public static void ifNotAssignable(Class<?> superType, Class<?> subType, Supplier<String> notice) {
         if (superType == null || subType == null || !superType.isAssignableFrom(subType))
             throw new IllegalArgumentException(notice.get());
+    }
+
+    public static void ifNotAssignable(Class<?> superType, Class<?> subType, String notice, Object... params) {
+        ifNotAssignable(superType, subType, () -> format(notice, params));
     }
 
 }
