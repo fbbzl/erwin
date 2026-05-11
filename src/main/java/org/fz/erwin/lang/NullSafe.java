@@ -6,6 +6,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import static cn.hutool.core.text.CharSequenceUtil.format;
+
 /**
  * All methods in this class will  suppress null pointer exception,
  * for further operations * This class cannot completely replace Optional {@link java.util.Optional} * However,
@@ -50,6 +52,10 @@ public class NullSafe {
         try { return supplier.get(); } catch (NullPointerException e) { throw exception; }
     }
 
+    public static <T> T nullThrow(Supplier<T> supplier, String notice, Object... params) {
+        return nullThrow(supplier, nullPointSupplier(notice, params));
+    }
+
     public static <T, E extends RuntimeException> T nullThrow(Supplier<T> supplier, Supplier<E> exception) {
         try { return supplier.get(); } catch (NullPointerException e) { throw exception.get(); }
     }
@@ -71,6 +77,10 @@ public class NullSafe {
         try { runnable.run(); } catch (NullPointerException nullPoint) { throw exception; }
     }
 
+    public static void nullThrow(Runnable runnable, String notice, Object... params) {
+        nullThrow(runnable, nullPointSupplier(notice, params));
+    }
+
     public static <E extends RuntimeException> void nullThrow(Runnable runnable, Supplier<E> exception) {
         try { runnable.run(); } catch (NullPointerException nullPoint) { throw exception.get(); }
     }
@@ -90,6 +100,10 @@ public class NullSafe {
 
     public static <T, E extends RuntimeException> void nullThrow(T arg, Consumer<T> consumer, E exception) {
         try { consumer.accept(arg); } catch (NullPointerException nullPoint) { throw exception; }
+    }
+
+    public static <T> void nullThrow(T arg, Consumer<T> consumer, String notice, Object... params) {
+        nullThrow(arg, consumer, nullPointSupplier(notice, params));
     }
 
     public static <T, E extends RuntimeException> void nullThrow(T arg, Consumer<T> consumer, Supplier<E> exception) {
@@ -121,8 +135,20 @@ public class NullSafe {
         try { return fn.apply(arg); } catch (NullPointerException nullPoint) { throw exception; }
     }
 
+    public static <T, R> R nullThrow(T arg, Function<T, R> fn, String notice, Object... params) {
+        return nullThrow(arg, fn, nullPointSupplier(notice, params));
+    }
+
     public static <T, R, E extends RuntimeException> R nullThrow(T arg, Function<T, R> fn, Supplier<E> exception) {
         try { return fn.apply(arg); } catch (NullPointerException nullPoint) { throw exception.get(); }
+    }
+
+    private static NullPointerException nullPoint(String notice, Object... params) {
+        return new NullPointerException(format(notice, params));
+    }
+
+    private static Supplier<NullPointerException> nullPointSupplier(String notice, Object... params) {
+        return () -> nullPoint(notice, params);
     }
 
     /**
@@ -155,6 +181,10 @@ public class NullSafe {
             return () -> NullSafe.nullThrow(supplier, exception);
         }
 
+        public static <T> Supplier<T> nullThrow(Supplier<T> supplier, String notice, Object... params) {
+            return () -> NullSafe.nullThrow(supplier, notice, params);
+        }
+
         public static Runnable nullable(Runnable runnable) {
             return nullThen(runnable, null);
         }
@@ -169,6 +199,10 @@ public class NullSafe {
 
         public <E extends RuntimeException> Runnable nullThrow(Runnable runnable, E exception) {
             return () -> NullSafe.nullThrow(runnable, exception);
+        }
+
+        public Runnable nullThrow(Runnable runnable, String notice, Object... params) {
+            return () -> NullSafe.nullThrow(runnable, notice, params);
         }
 
         public static <T> Consumer<T> nullable(Consumer<T> consumer) {
@@ -186,6 +220,10 @@ public class NullSafe {
         public static <T, E extends RuntimeException> Consumer<T> nullThrow(Consumer<T> consumer,
                                                                             Supplier<E> exception) {
             return t -> NullSafe.nullThrow(t, consumer, exception);
+        }
+
+        public static <T> Consumer<T> nullThrow(Consumer<T> consumer, String notice, Object... params) {
+            return t -> NullSafe.nullThrow(t, consumer, notice, params);
         }
 
         public static <T, R> Function<T, R> nullable(Function<T, R> fn) {
@@ -211,6 +249,10 @@ public class NullSafe {
         public static <T, R, E extends RuntimeException> Function<T, R> nullThrow(Function<T, R> fn,
                                                                                   Supplier<E> exception) {
             return t -> NullSafe.nullThrow(t, fn, exception);
+        }
+
+        public static <T, R> Function<T, R> nullThrow(Function<T, R> fn, String notice, Object... params) {
+            return t -> NullSafe.nullThrow(t, fn, notice, params);
         }
     }
 
