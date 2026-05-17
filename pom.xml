@@ -6,7 +6,7 @@
 
     <groupId>io.github.fbbzl</groupId>
     <artifactId>erwin</artifactId>
-    <version>1.2.11</version>
+    <version>1.2.12</version>
 
     <name>erwin</name>
     <description>a tool</description>
@@ -143,7 +143,6 @@
     </dependencies>
 
     <build>
-        <testSourceDirectory>src/main/test</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
