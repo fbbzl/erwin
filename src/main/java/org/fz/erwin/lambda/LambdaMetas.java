@@ -6,7 +6,6 @@ import org.fz.erwin.lambda.Try.LambdasException;
 import java.lang.invoke.*;
 import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.reflect.Field;
-import java.lang.reflect.Type;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -25,7 +24,7 @@ import static java.lang.invoke.MethodType.methodType;
 public class LambdaMetas {
     public static <T> Supplier<T> lambdaConstructor(Class<T> clazz) {
         try {
-            Lookup       lookup            = MethodHandles.lookup();
+            Lookup       lookup            = MethodHandles.privateLookupIn(clazz, MethodHandles.lookup());
             MethodHandle constructorHandle = lookup.findConstructor(clazz, methodType(void.class));
 
             CallSite site = LambdaMetafactory.metafactory(
@@ -45,7 +44,7 @@ public class LambdaMetas {
 
     public static <P, T> Function<P, T> lambdaConstructor(Class<T> clazz, Class<P> p0Type) {
         try {
-            Lookup lookup = MethodHandles.lookup();
+            Lookup lookup = MethodHandles.privateLookupIn(clazz, MethodHandles.lookup());
             MethodHandle constructorHandle = lookup.findConstructor(clazz, methodType(void.class, p0Type));
 
             CallSite site = LambdaMetafactory.metafactory(
@@ -65,7 +64,7 @@ public class LambdaMetas {
 
     public static <P, B, T> BiFunction<P, B, T> lambdaConstructor(Class<T> clazz, Class<P> p0Type, Class<B> p1Type) {
         try {
-            Lookup       lookup            = MethodHandles.lookup();
+            Lookup       lookup            = MethodHandles.privateLookupIn(clazz, MethodHandles.lookup());
             MethodHandle constructorHandle = lookup.findConstructor(clazz, methodType(void.class, p0Type, p1Type));
 
             CallSite site = LambdaMetafactory.metafactory(
@@ -83,10 +82,10 @@ public class LambdaMetas {
         }
     }
 
-    public static <T, R> Function<T, R> lambdaGetter(Type clazz, Class<R> returnType, String methodName) {
+    public static <T, R> Function<T, R> lambdaGetter(Class<T> clazz, Class<R> returnType, String methodName) {
         try {
-            Lookup       lookup       = MethodHandles.lookup();
-            MethodHandle getterHandle = lookup.findVirtual((Class<T>) clazz, methodName, methodType(returnType));
+            Lookup       lookup       = MethodHandles.privateLookupIn(clazz, MethodHandles.lookup());
+            MethodHandle getterHandle = lookup.findVirtual(clazz, methodName, methodType(returnType));
 
             CallSite site = LambdaMetafactory.metafactory(
                     lookup,
@@ -105,7 +104,7 @@ public class LambdaMetas {
 
     public static <A, P> BiConsumer<A, P> lambdaSetter(Class<A> clazz, Class<P> paramType, String methodName) {
         try {
-            Lookup       lookup       = MethodHandles.lookup();
+            Lookup       lookup       = MethodHandles.privateLookupIn(clazz, MethodHandles.lookup());
             MethodHandle setterHandle = lookup.findVirtual(clazz, methodName, methodType(void.class, paramType));
 
             CallSite site = LambdaMetafactory.metafactory(

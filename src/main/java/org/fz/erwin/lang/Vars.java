@@ -42,9 +42,9 @@ public class Vars {
     public <T> T requireNull(T object, Throws.MessageSupplier notice)                                      { Throws.ifNotNull(object, notice); return null; }
     public <T> T requireNull(T object)                                                               { Throws.ifNotNull(object, REQUIRE_NULL); return null; }
     public <T> T[] requireNotEmpty(T[] array, Throws.MessageSupplier notice)                               { Throws.ifEmpty(array, notice); return array; }
-    public <T> T[] requireNotEmpty(T[] array)                                                        { Throws.ifEmpty(array, REQUIRE_COLLECTION_NOT_EMPTY); return array; }
+    public <T> T[] requireNotEmpty(T[] array)                                                        { Throws.ifEmpty(array, REQUIRE_ARRAY_NOT_EMPTY); return array; }
     public <T> Collection<T> requireNotEmpty(Collection<T> collection, Throws.MessageSupplier notice)      { Throws.ifEmpty(collection, notice); return collection; }
-    public <T> Collection<T> requireNotEmpty(Collection<T> collection)                               { Throws.ifEmpty(collection, REQUIRE_ARRAY_NOT_EMPTY); return collection; }
+    public <T> Collection<T> requireNotEmpty(Collection<T> collection)                               { Throws.ifEmpty(collection, REQUIRE_COLLECTION_NOT_EMPTY); return collection; }
     public <K, V> Map<K, V> requireNotEmpty(Map<K, V> map, Throws.MessageSupplier notice)                  { Throws.ifEmpty(map, notice); return map; }
     public <K, V> Map<K, V> requireNotEmpty(Map<K, V> map)                                           { Throws.ifEmpty(map, REQUIRE_MAP_NOT_EMPTY); return map; }
     public String requireNotBlank(String string, Throws.MessageSupplier notice)                            { Throws.ifBlank(string, notice); return string; }
@@ -53,8 +53,8 @@ public class Vars {
     public <T> void requireEquals(T l, T r)                                                          { Throws.ifNotEquals(l, r, REQUIRE_EQUALS); }
     public <T> void requireNotEquals(T l, T r, Throws.MessageSupplier notice)                              { Throws.ifEquals(l, r, notice); }
     public <T> void requireNotEquals(T l, T r)                                                       { Throws.ifEquals(l, r, REQUIRE_NOT_EQUALS); }
-    public <T> void requireContains(Collection<T> collection, T element, Throws.MessageSupplier notice)    { Throws.ifContains(collection, element, notice); }
-    public <T> void requireContains(Collection<T> collection, T element)                             { Throws.ifContains(collection, element, REQUIRE_CONTAINS); }
+    public <T> void requireContains(Collection<T> collection, T element, Throws.MessageSupplier notice)    { Throws.ifNotContains(collection, element, notice); }
+    public <T> void requireContains(Collection<T> collection, T element)                             { Throws.ifNotContains(collection, element, REQUIRE_CONTAINS); }
     public <T> void requireNotContains(Collection<T> collection, T element, Throws.MessageSupplier notice) { Throws.ifContains(collection, element, notice); }
     public <T> void requireNotContains(Collection<T> collection, T element)                          { Throws.ifContains(collection, element, REQUIRE_NOT_CONTAINS); }
 

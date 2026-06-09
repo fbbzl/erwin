@@ -52,13 +52,10 @@ public class StreamForks<T> {
     private ForkingStreamConsumer<T> build() {
         List<BlockingQueue<T>> queues = new ArrayList<>(10);
 
-        Map<Object, Future<?>> actions = forks.entrySet().stream().reduce(new HashMap<>(16), (map, e) -> {
-            map.put(e.getKey(), getForkResult(queues, e.getValue()));
-            return map;
-        }, (m1, m2) -> {
-            m1.putAll(m2);
-            return m1;
-        });
+        Map<Object, Future<?>> actions = forks.entrySet().stream()
+                .collect(HashMap::new,
+                        (map, e) -> map.put(e.getKey(), getForkResult(queues, e.getValue())),
+                        HashMap::putAll);
 
         return new ForkingStreamConsumer<>(queues, actions);
     }
@@ -103,11 +100,17 @@ public class StreamForks<T> {
 
         @Override
         public <R> R get(Object key) {
+            Future<?> future = actions.get(key);
+            if (future == null) throw new IllegalArgumentException("No fork registered for key: " + key);
             try {
-                return ((Future<R>) actions.get(key)).get();
+                return (R) future.get();
             }
-            catch (Exception exception) {
-                throw new RuntimeException(exception);
+            catch (InterruptedException exception) {
+                Thread.currentThread().interrupt();
+                throw new RuntimeException("Interrupted while getting fork result for key: " + key, exception);
+            }
+            catch (java.util.concurrent.ExecutionException exception) {
+                throw new RuntimeException("Fork execution failed for key: " + key, exception.getCause());
             }
         }
 
@@ -135,6 +138,7 @@ public class StreamForks<T> {
                     break;
                 }
                 catch (InterruptedException exception) {
+                    Thread.currentThread().interrupt();
                     throw new RuntimeException(exception);
                 }
             }

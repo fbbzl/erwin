@@ -43,7 +43,7 @@ public class NullSafe {
     }
 
     public static <T> T nullDefault(Supplier<T> supplier, Supplier<T> defaultValue) {
-        try { return supplier.get(); } catch (NullPointerException nullPoint) { return defaultValue.get(); }
+        try { return supplier.get(); } catch (NullPointerException nullPoint) { return defaultValue != null ? defaultValue.get() : null; }
     }
 
     public static <T, E extends RuntimeException> T nullThrow(Supplier<T> supplier, E exception) {
@@ -114,7 +114,7 @@ public class NullSafe {
     }
 
     public static <T, R> R nullDefault(T arg, Function<T, R> fn, Supplier<R> defaultValue) {
-        try { return fn.apply(arg); } catch (NullPointerException nullPoint) { return defaultValue.get(); }
+        try { return fn.apply(arg); } catch (NullPointerException nullPoint) { return defaultValue != null ? defaultValue.get() : null; }
     }
 
     public static <T, R, E extends RuntimeException> R nullThrow(T arg, Function<T, R> fn, E exception) {
@@ -163,11 +163,11 @@ public class NullSafe {
             return () -> NullSafe.nullThen(runnable, handleNull);
         }
 
-        public <E extends RuntimeException> Runnable nullThrow(Runnable runnable, Supplier<E> exception) {
+        public static <E extends RuntimeException> Runnable nullThrow(Runnable runnable, Supplier<E> exception) {
             return () -> NullSafe.nullThrow(runnable, exception);
         }
 
-        public <E extends RuntimeException> Runnable nullThrow(Runnable runnable, E exception) {
+        public static <E extends RuntimeException> Runnable nullThrow(Runnable runnable, E exception) {
             return () -> NullSafe.nullThrow(runnable, exception);
         }
 

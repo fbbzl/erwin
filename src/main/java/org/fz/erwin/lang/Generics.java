@@ -18,7 +18,7 @@ public class Generics
     {
         ResolvableType currentType = ResolvableType.forClass(currentClass);
 
-        while (true) {
+        for (int maxDepth = 256; maxDepth > 0; maxDepth--) {
             ResolvableType superType = currentType.getSuperType();
             Class<?> rawClass = superType.getRawClass();
 
@@ -32,5 +32,7 @@ public class Generics
 
             currentType = superType;
         }
+
+        throw new IllegalStateException("Class hierarchy too deep or cyclic for " + currentClass);
     }
 }

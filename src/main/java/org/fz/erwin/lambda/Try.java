@@ -100,6 +100,8 @@ public final class Try {
         return () -> {
             try {
                 run.run();
+            } catch (RuntimeException exception) {
+                throw exception;
             } catch (Exception exception) {
             }
         };
@@ -109,6 +111,8 @@ public final class Try {
         return t -> {
             try {
                 consumer.accept(t);
+            } catch (RuntimeException exception) {
+                throw exception;
             } catch (Exception exception) {
             }
         };
