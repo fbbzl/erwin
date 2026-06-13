@@ -7,29 +7,29 @@
 <h1 align="center">erwin</h1>
 
 <p align="center">
-  <b>A lightweight and practical Java utility library</b><br>
-  <i>Focused on exception guards, null-safe access, Lambda adapters, reflection helpers, and Stream forking</i>
+  <b>轻量、顺手的 Java 工具库</b><br>
+  <i>聚焦异常断言、空安全访问、Lambda 适配、反射辅助与 Stream 分叉处理</i>
 </p>
 
 <p align="center">
-  <a href="./README_zh.md">中文</a>
+  <a href="./README.md">English</a>
 </p>
 
 ---
 
-## Module Matrix
+## 模块矩阵
 
 ```
 erwin
-├── exception : Conditional exception guards, message formatting, and MessageSource fallback
-├── lang      : Null-safe access, variable validation, and generic type resolution
-├── lambda    : Checked-exception Lambda adapters and LambdaMetafactory helpers
-└── stream    : Fork one Stream into multiple result pipelines
+├── exception : 条件式异常断言、消息格式化与 i18n MessageSource 兜底
+├── lang      : 空安全访问、变量校验、泛型类型解析
+├── lambda    : checked exception Lambda 适配、LambdaMetafactory 辅助
+└── stream    : 单个 Stream 分叉为多路计算结果
 ```
 
 ---
 
-## 60-Second Setup
+## 一分钟接入
 
 ```xml
 <dependency>
@@ -39,7 +39,7 @@ erwin
 </dependency>
 ```
 
-Requires Java 21 or later.
+要求 Java 21 及以上。
 
 ```bash
 mvn test
@@ -48,11 +48,11 @@ mvn package
 
 ---
 
-## Core Powers
+## 核心能力
 
-### Conditional Guards
+### 条件断言
 
-`Throws` provides condition-based exception throwing, while `Vars` adds a require-style validation layer on top of it.
+`Throws` 提供条件式异常抛出，`Vars` 在其基础上提供更像参数校验的 require 风格 API。
 
 ```java
 import org.fz.erwin.exception.Throws;
@@ -65,9 +65,9 @@ Throws.ifTrue(pageSize > 100, "page size must be <= {}", 100);
 Throws.ifEmpty(userList, "user list can not be empty");
 ```
 
-### Null-Safe Access
+### 空安全访问
 
-`NullSafe` wraps a potentially null access chain in a Lambda. It is handy for simple read paths where nested null checks would be noisy.
+`NullSafe` 用 Lambda 包住可能出现空指针的访问链，适合在简单取值场景里减少层层判空。
 
 ```java
 import org.fz.erwin.lang.NullSafe;
@@ -78,9 +78,9 @@ Integer length = NullSafe.nullDefault(
 );
 ```
 
-### Checked Exception Lambda Adapters
+### Checked Exception Lambda 适配
 
-`Try` adapts functions that throw checked exceptions into standard JDK functional interfaces, wrapping failures as runtime exceptions.
+`Try` 可以把带 checked exception 的函数适配为标准 JDK 函数式接口，并统一包装为运行时异常。
 
 ```java
 import org.fz.erwin.lambda.Try;
@@ -90,9 +90,9 @@ List<String> contents = paths.stream()
         .toList();
 ```
 
-### Lambda Metadata and Reflection Helpers
+### Lambda 元信息与反射辅助
 
-`LambdaMetas` uses `LambdaMetafactory` to create functional entry points for constructors, getters, and setters.
+`LambdaMetas` 基于 `LambdaMetafactory` 生成构造器、getter、setter 的函数式调用入口。
 
 ```java
 import org.fz.erwin.lambda.LambdaMetas;
@@ -102,9 +102,9 @@ Function<User, String> getter = LambdaMetas.lambdaGetter(User.class, String.clas
 BiConsumer<User, String> setter = LambdaMetas.lambdaSetter(User.class, String.class, "setName");
 ```
 
-### Stream Forking
+### Stream 分叉计算
 
-`StreamForks` lets multiple Stream pipelines consume the same source data and collect different results from a single entry point.
+`StreamForks` 让同一份数据源被多路 Stream 消费，用一个入口收集不同统计结果。
 
 ```java
 import org.fz.erwin.stream.StreamForks;
@@ -120,10 +120,10 @@ List<Integer> even = result.get("even");
 
 ---
 
-## Tech Stack
+## 工具栈
 
-| Technology | Version |
-|------------|---------|
+| 技术 | 版本 |
+|------|------|
 | Java | 21 |
 | Lombok | 1.18.46 |
 | Hutool | 5.8.44 |
@@ -145,4 +145,3 @@ List<Integer> even = result.get("even");
 <p align="center">
   <sub>Made with love by <a href="https://github.com/fbbzl">fengbinbin</a></sub>
 </p>
-
